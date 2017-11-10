@@ -1,7 +1,8 @@
-package com.ammyt.disher
+package com.ammyt.disher.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.ammyt.disher.R
 
 class TableListActivity : AppCompatActivity() {
 
