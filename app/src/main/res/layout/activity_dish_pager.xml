@@ -4,7 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/dish_pager_fragment"
     tools:context="com.ammyt.disher.activity.DishPagerActivity">
+
+    <FrameLayout
+        android:id="@+id/dish_pager_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
 
 </FrameLayout>

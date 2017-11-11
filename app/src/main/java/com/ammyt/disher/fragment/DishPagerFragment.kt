@@ -42,13 +42,14 @@ class DishPagerFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        inflater.let {
-            root = it!!.inflate(R.layout.fragment_dish_pager, container, false)
+        inflater?.let {
+            root = inflater.inflate(R.layout.fragment_dish_pager, container, false)
 
             initialTableIndex = arguments?.getInt(TABLE_INDEX_ARG) ?: 0
 
             val adapter = object : FragmentPagerAdapter(fragmentManager) {
                 override fun getItem(position: Int): Fragment {
+                    //return  DishListFragment.newInstance(Tables.get(position))
                     return getItemPagerAdapter!!.fragmentToShow(Tables.get(position))
                 }
 
@@ -91,9 +92,9 @@ class DishPagerFragment : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        if (context is GetItemPagerAdapter) {
-            getItemPagerAdapter = context
-        }
+        //if (context is GetItemPagerAdapter) {
+            getItemPagerAdapter = context as GetItemPagerAdapter
+        //}
     }
 
     override fun onDetach() {

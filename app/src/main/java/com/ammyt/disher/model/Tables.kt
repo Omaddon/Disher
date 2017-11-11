@@ -6,11 +6,11 @@ import java.io.Serializable
 object Tables : Serializable {
 
     private var tables: List<Table> = listOf(
-            Table("Table 1", mutableListOf()),
-            Table("Table 2", mutableListOf()),
-            Table("Table 3", mutableListOf()),
-            Table("Table 4", mutableListOf()),
-            Table("Table 5", mutableListOf())
+            Table("Table 1"),
+            Table("Table 2"),
+            Table("Table 3"),
+            Table("Table 4"),
+            Table("Table 5")
     )
 
     val count: Int
