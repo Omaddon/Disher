@@ -1,13 +1,19 @@
 package com.ammyt.disher.activity
 
-import android.support.v7.app.AppCompatActivity
+import android.app.Fragment
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.ammyt.disher.R
+import com.ammyt.disher.fragment.DishListFragment
+import com.ammyt.disher.fragment.DishPagerFragment
 import com.ammyt.disher.fragment.TableListFragment
 import com.ammyt.disher.model.Table
 
-class TableListActivity : AppCompatActivity(), TableListFragment.OnTableSelectedListener {
+class TableListActivity :
+        AppCompatActivity(),
+        TableListFragment.OnTableSelectedListener,
+        DishPagerFragment.GetItemPagerAdapter {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,9 +27,29 @@ class TableListActivity : AppCompatActivity(), TableListFragment.OnTableSelected
                         .commit()
             }
         }
+
+        if (findViewById<View>(R.id.dish_pager_fragment) != null) {
+            if (fragmentManager.findFragmentById(R.id.dish_pager_fragment) == null) {
+                val dishPagerFragment = DishPagerFragment.newInstance(0)
+                fragmentManager.beginTransaction()
+                        .add(R.id.dish_pager_fragment, dishPagerFragment)
+                        .commit()
+            }
+        }
     }
 
     override fun onTableSelected(table: Table?, position: Int) {
-        // TODO: navigation to DishesList
+        val dishPagerFragment = fragmentManager.findFragmentById(R.id.dish_pager_fragment) as? DishPagerFragment
+
+        if (dishPagerFragment == null) {
+            startActivity(DishPagerActivity.intent(this, position))
+        }
+        else {
+            dishPagerFragment.moveToTable(position)
+        }
+    }
+
+    override fun fragmentToShow(table: Table): Fragment {
+        return DishListFragment.newInstance(table)
     }
 }

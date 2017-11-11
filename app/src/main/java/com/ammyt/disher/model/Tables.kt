@@ -16,7 +16,7 @@ object Tables : Serializable {
     val count: Int
         get() = tables.size
 
-    operator fun get(i: Int) = tables[i]
+    operator fun get(i: Int): Table = tables[i]
 
     fun toArray() = tables.toTypedArray()
 }

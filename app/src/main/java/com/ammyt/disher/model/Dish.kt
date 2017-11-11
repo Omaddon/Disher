@@ -45,7 +45,7 @@ data class Dish(
         Allergen.TREENUTS       -> R.drawable.allergen_treenuts
     }
 
-    fun drawableDish(image: Int) = when (image) {
+    fun drawableDish(image: Int?) = when (image) {
         0       -> R.drawable.food_beer
         1       -> R.drawable.food_cesar_salad
         2       -> R.drawable.food_chicken
