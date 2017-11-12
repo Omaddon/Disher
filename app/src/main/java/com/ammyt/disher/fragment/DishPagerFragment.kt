@@ -6,9 +6,8 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v13.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.app.AppCompatActivity
+import android.view.*
 
 import com.ammyt.disher.R
 import com.ammyt.disher.model.Table
@@ -35,6 +34,12 @@ class DishPagerFragment : Fragment() {
 
             return dishPagerFragment
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater?,
@@ -84,8 +89,41 @@ class DishPagerFragment : Fragment() {
         return root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        inflater?.inflate(R.menu.pager, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.previous -> {
+                pager.currentItem--
+                return true
+            }
+            R.id.next -> {
+                pager.currentItem++
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        super.onPrepareOptionsMenu(menu)
+
+        val menuPrev = menu?.findItem(R.id.previous)
+        val menuNext = menu?.findItem(R.id.next)
+
+        menuPrev?.setEnabled(pager.currentItem > 0)
+        menuNext?.setEnabled(pager.currentItem < Tables.count - 1)
+    }
+
     private fun updateTableInfo(position: Int) {
-        // TODO actualizar el nombre de la mesa en la futura supportActionBar
+        if (activity is AppCompatActivity) {
+            val supportActionBar = (activity as? AppCompatActivity)?.supportActionBar
+            supportActionBar?.title = Tables.get(position).name
+        }
     }
 
     override fun onAttach(context: Context?) {

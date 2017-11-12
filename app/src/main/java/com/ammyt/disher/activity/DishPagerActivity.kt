@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.Toolbar
 import com.ammyt.disher.R
 import com.ammyt.disher.fragment.DishListFragment
 import com.ammyt.disher.fragment.DishPagerFragment
@@ -26,6 +27,10 @@ class DishPagerActivity : AppCompatActivity(), DishPagerFragment.DishPagerAdapte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dish_pager)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        //toolbar.setLogo(R.drawable.icon_disher)
+        setSupportActionBar(toolbar)
 
         if (fragmentManager.findFragmentById(R.id.dish_pager_fragment) == null) {
             val tableIndex = intent.getIntExtra(TABLE_INDEX_EXTRA, 0)

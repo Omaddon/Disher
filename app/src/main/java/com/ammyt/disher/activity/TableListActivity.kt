@@ -12,7 +12,8 @@ import com.ammyt.disher.model.Table
 
 class TableListActivity :
         AppCompatActivity(),
-        TableListFragment.OnTableSelectedListener {
+        TableListFragment.OnTableSelectedListener,
+        DishPagerFragment.DishPagerAdapter {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,5 +47,9 @@ class TableListActivity :
         else {
             dishPagerFragment.moveToTable(position)
         }
+    }
+
+    override fun fragmentToShow(table: Table): Fragment {
+        return DishListFragment.newInstance(table)
     }
 }
