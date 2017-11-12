@@ -21,7 +21,7 @@ class DishPagerFragment : Fragment() {
     val pager by lazy { root.findViewById<ViewPager>(R.id.dish_view_pager) }
     var initialTableIndex: Int = 0
 
-    private var getItemPagerAdapter: GetItemPagerAdapter? = null
+    private var getItemPagerAdapter: DishPagerAdapter? = null
 
     companion object {
         val TABLE_INDEX_ARG = "TABLE_INDEX_ARG"
@@ -49,7 +49,6 @@ class DishPagerFragment : Fragment() {
 
             val adapter = object : FragmentPagerAdapter(fragmentManager) {
                 override fun getItem(position: Int): Fragment {
-                    //return  DishListFragment.newInstance(Tables.get(position))
                     return getItemPagerAdapter!!.fragmentToShow(Tables.get(position))
                 }
 
@@ -92,9 +91,9 @@ class DishPagerFragment : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        //if (context is GetItemPagerAdapter) {
-            getItemPagerAdapter = context as GetItemPagerAdapter
-        //}
+        if (context is DishPagerAdapter) {
+            getItemPagerAdapter = context
+        }
     }
 
     override fun onDetach() {
@@ -107,7 +106,7 @@ class DishPagerFragment : Fragment() {
         pager.currentItem = position
     }
 
-    interface GetItemPagerAdapter {
+    interface DishPagerAdapter {
         fun fragmentToShow(table: Table): Fragment
     }
 

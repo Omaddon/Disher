@@ -1,13 +1,16 @@
 package com.ammyt.disher.activity
 
+import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.ammyt.disher.R
+import com.ammyt.disher.fragment.DishListFragment
 import com.ammyt.disher.fragment.DishPagerFragment
+import com.ammyt.disher.model.Table
 
-class DishPagerActivity : AppCompatActivity() {
+class DishPagerActivity : AppCompatActivity(), DishPagerFragment.DishPagerAdapter {
 
     companion object {
         private val TABLE_INDEX_EXTRA = "TABLE_INDEX_EXTRA"
@@ -31,5 +34,9 @@ class DishPagerActivity : AppCompatActivity() {
                     .add(R.id.dish_pager_fragment, dishPagerFragment)
                     .commit()
         }
+    }
+
+    override fun fragmentToShow(table: Table): Fragment {
+        return DishListFragment.newInstance(table)
     }
 }
