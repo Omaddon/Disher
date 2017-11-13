@@ -89,20 +89,21 @@ class DishListFragment : Fragment() {
 
     private fun updateDishList() {
 
+        // TODO quitar mock de dishList de cada mesa
         // MOCK data
-        var mockDishes = mutableListOf<Dish>()
-
-        for (i in 0..7) {
-            val dish = Dish(
-                    "Test ${i}",
-                    i,
-                    null,
-                    42.2f
-            )
-
-            mockDishes.add(dish)
-        }
-
-        dishes = mockDishes
+//        var mockDishes = mutableListOf<Dish>()
+//
+//        for (i in 0..7) {
+//            val dish = Dish(
+//                    "Test ${i}",
+//                    i,
+//                    null,
+//                    42.2f
+//            )
+//
+//            mockDishes.add(dish)
+//        }
+//
+//        dishes = mockDishes
     }
 }

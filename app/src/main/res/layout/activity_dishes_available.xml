@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ammyt.disher.activity.TableListActivity">
+    tools:context="com.ammyt.disher.activity.DishesAvailableActivity">
 
-    <FrameLayout
-        android:id="@+id/table_list_fragment"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/dishes_available_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </FrameLayout>
+    </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

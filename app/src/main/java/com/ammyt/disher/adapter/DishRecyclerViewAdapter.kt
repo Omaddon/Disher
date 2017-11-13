@@ -10,7 +10,7 @@ import com.ammyt.disher.R
 import com.ammyt.disher.model.Dish
 
 
-class DishRecyclerViewAdapter(val dishList: MutableList<Dish>?) :
+class DishRecyclerViewAdapter(val dishList: List<Dish>?) :
         RecyclerView.Adapter<DishRecyclerViewAdapter.DishListViewHolder>() {
 
     var onClickListener: View.OnClickListener? = null

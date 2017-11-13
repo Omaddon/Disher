@@ -5,7 +5,7 @@ import java.io.Serializable
 
 object Tables : Serializable {
 
-    private var tables: List<Table> = listOf(
+    private var tables: MutableList<Table> = mutableListOf(
             Table("Table 1"),
             Table("Table 2"),
             Table("Table 3"),

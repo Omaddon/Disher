@@ -5,11 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.Toolbar
+import android.view.View
 import com.ammyt.disher.R
 import com.ammyt.disher.fragment.DishListFragment
 import com.ammyt.disher.fragment.DishPagerFragment
 import com.ammyt.disher.model.Table
+import com.ammyt.disher.model.Tables
 
 class DishPagerActivity : AppCompatActivity(), DishPagerFragment.DishPagerAdapter {
 
@@ -32,12 +35,19 @@ class DishPagerActivity : AppCompatActivity(), DishPagerFragment.DishPagerAdapte
         //toolbar.setLogo(R.drawable.icon_disher)
         setSupportActionBar(toolbar)
 
+        val tableIndex = intent.getIntExtra(TABLE_INDEX_EXTRA, 0)
+
         if (fragmentManager.findFragmentById(R.id.dish_pager_fragment) == null) {
-            val tableIndex = intent.getIntExtra(TABLE_INDEX_EXTRA, 0)
             val dishPagerFragment = DishPagerFragment.newInstance(tableIndex)
             fragmentManager.beginTransaction()
                     .add(R.id.dish_pager_fragment, dishPagerFragment)
                     .commit()
+        }
+
+        findViewById<FloatingActionButton>(R.id.show_dishes_available).setOnClickListener { v: View? ->
+            val table = Tables.get(tableIndex)
+
+            startActivity(DishesAvailableActivity.intent(this, table))
         }
     }
 
