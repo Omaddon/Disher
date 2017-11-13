@@ -1,5 +1,6 @@
 package com.ammyt.disher.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -53,6 +54,25 @@ class DishesAvailableActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        // TODO volvemos del dishDital: hacer lo que haya que hacer
+        if (requestCode == REQUEST_DISH_FOR_ADD) {
+            if (resultCode == Activity.RESULT_OK) {
+                val returnIntent = Intent()
+                val table = data?.getSerializableExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH)
+
+                if (table != null) {
+                    returnIntent.putExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH, table)
+                    setResult(Activity.RESULT_OK, returnIntent)
+                }
+                else {
+                    setResult(Activity.RESULT_CANCELED)
+                }
+
+                finish()
+            }
+            else {
+                setResult(Activity.RESULT_CANCELED)
+                finish()
+            }
+        }
     }
 }

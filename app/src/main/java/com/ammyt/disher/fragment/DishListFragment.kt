@@ -1,7 +1,9 @@
 package com.ammyt.disher.fragment
 
 import android.app.Fragment
+import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -19,6 +21,7 @@ class DishListFragment : Fragment() {
 
     lateinit var root: View
     lateinit var dishRecyclerView: RecyclerView
+    private var onAddDishToTable: OnAddDishToTable? = null
 
     companion object {
         private val TABLE_ARG = "TABLE_ARG"
@@ -58,9 +61,6 @@ class DishListFragment : Fragment() {
 
                 table?.dishes = value
             }
-            else {
-                updateDishList()
-            }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,8 +72,8 @@ class DishListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        inflater.let {
-            root = it!!.inflate(R.layout.fragment_dish_list, container, false)
+        inflater?.let {
+            root = it.inflate(R.layout.fragment_dish_list, container, false)
 
             dishRecyclerView = root.findViewById(R.id.dish_recycler_view)
             dishRecyclerView.layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.recycler_columns))
@@ -82,28 +82,34 @@ class DishListFragment : Fragment() {
             if (arguments != null) {
                 table = arguments.getSerializable(TABLE_ARG) as? Table
             }
+
+            root.findViewById<FloatingActionButton>(R.id.show_dishes_available).setOnClickListener { v: View? ->
+                onAddDishToTable?.showDishAvailable()
+            }
         }
 
         return root
     }
 
-    private fun updateDishList() {
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
 
-        // TODO quitar mock de dishList de cada mesa
-        // MOCK data
-//        var mockDishes = mutableListOf<Dish>()
-//
-//        for (i in 0..7) {
-//            val dish = Dish(
-//                    "Test ${i}",
-//                    i,
-//                    null,
-//                    42.2f
-//            )
-//
-//            mockDishes.add(dish)
-//        }
-//
-//        dishes = mockDishes
+        if (context is OnAddDishToTable) {
+            onAddDishToTable = context
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        onAddDishToTable = null
+    }
+
+    fun updateDishList() {
+        dishRecyclerView.adapter.notifyDataSetChanged()
+    }
+
+    interface OnAddDishToTable {
+        fun showDishAvailable()
     }
 }

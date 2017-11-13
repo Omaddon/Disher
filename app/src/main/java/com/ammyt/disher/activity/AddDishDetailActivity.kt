@@ -1,9 +1,11 @@
 package com.ammyt.disher.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.ammyt.disher.R
@@ -14,7 +16,7 @@ class AddDishDetailActivity : AppCompatActivity() {
 
     companion object {
         val TABLE_TO_ADD_DISH = "TABLE_TO_ADD_DISH"
-        val DISH_TO_SHOW = "DISH_TO_SHOW"
+        private val DISH_TO_SHOW = "DISH_TO_SHOW"
 
         fun intent(context: Context, table: Table?, dish: Dish): Intent {
             val intent = Intent(context, AddDishDetailActivity::class.java)
@@ -37,6 +39,31 @@ class AddDishDetailActivity : AppCompatActivity() {
 
             image.setImageResource(it.image ?: R.drawable.error)
             name.text = it.name
+        }
+        val addDishButton = findViewById<Button>(R.id.add_dish_button)
+        addDishButton.setOnClickListener { addDish(dish) }
+
+        findViewById<Button>(R.id.cancel_dish_button)?.setOnClickListener { cancelDish() }
+    }
+
+    private fun cancelDish() {
+        setResult(Activity.RESULT_CANCELED)
+        finish()
+    }
+
+    private fun addDish(dish: Dish?) {
+        if (dish != null) {
+            val table = intent.getSerializableExtra(TABLE_TO_ADD_DISH) as? Table
+            table?.addDishToTable(dish)
+
+            val returnIntent = Intent()
+            returnIntent.putExtra(TABLE_TO_ADD_DISH, table)
+
+            setResult(Activity.RESULT_OK, returnIntent)
+            finish()
+        }
+        else {
+            cancelDish()
         }
     }
 }

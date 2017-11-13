@@ -8,7 +8,6 @@ import android.support.v13.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.*
-
 import com.ammyt.disher.R
 import com.ammyt.disher.model.Table
 import com.ammyt.disher.model.Tables
@@ -20,7 +19,7 @@ class DishPagerFragment : Fragment() {
     val pager by lazy { root.findViewById<ViewPager>(R.id.dish_view_pager) }
     var initialTableIndex: Int = 0
 
-    private var getItemPagerAdapter: DishPagerAdapter? = null
+    private var dishPagerAdapter: DishPagerAdapter? = null
 
     companion object {
         val TABLE_INDEX_ARG = "TABLE_INDEX_ARG"
@@ -54,7 +53,7 @@ class DishPagerFragment : Fragment() {
 
             val adapter = object : FragmentPagerAdapter(fragmentManager) {
                 override fun getItem(position: Int): Fragment {
-                    return getItemPagerAdapter!!.fragmentToShow(Tables.get(position))
+                    return dishPagerAdapter!!.fragmentToShow(Tables.get(position))
                 }
 
                 override fun getCount(): Int {
@@ -130,14 +129,14 @@ class DishPagerFragment : Fragment() {
         super.onAttach(context)
 
         if (context is DishPagerAdapter) {
-            getItemPagerAdapter = context
+            dishPagerAdapter = context
         }
     }
 
     override fun onDetach() {
         super.onDetach()
 
-        getItemPagerAdapter = null
+        dishPagerAdapter = null
     }
 
     fun moveToTable(position: Int) {
@@ -147,6 +146,4 @@ class DishPagerFragment : Fragment() {
     interface DishPagerAdapter {
         fun fragmentToShow(table: Table): Fragment
     }
-
-
 }

@@ -2,7 +2,6 @@ package com.ammyt.disher.activity
 
 import android.app.Fragment
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.ammyt.disher.R
@@ -23,6 +22,8 @@ class TableListActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_table_list)
 
+        // TODO descargar lista de posibles platos
+
         tableSelected = Tables.get(0)
 
         if (findViewById<View>(R.id.table_list_fragment) != null) {
@@ -40,14 +41,6 @@ class TableListActivity :
                 fragmentManager.beginTransaction()
                         .add(R.id.dish_pager_fragment, dishPagerFragment)
                         .commit()
-            }
-        }
-
-        val addDishFloatingButton = findViewById<FloatingActionButton>(R.id.show_dishes_available)
-
-        addDishFloatingButton?.let {
-            it.setOnClickListener { v: View? ->
-                startActivity(DishesAvailableActivity.intent(this, tableSelected))
             }
         }
     }
