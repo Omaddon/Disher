@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<ViewSwitcher
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_switcher"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:layout_margin="@dimen/margin_default"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -43,4 +52,4 @@
 
     </android.support.constraint.ConstraintLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</ViewSwitcher>
