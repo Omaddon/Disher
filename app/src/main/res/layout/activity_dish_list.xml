@@ -22,7 +22,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
-        android:id="@+id/dish_pager_fragment"
+        android:id="@+id/dish_list_fragment"
         tools:context="com.ammyt.disher.activity.DishPagerActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

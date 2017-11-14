@@ -23,7 +23,7 @@
 
 
         <FrameLayout
-            android:id="@+id/dish_pager_fragment"
+            android:id="@+id/dish_list_fragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"

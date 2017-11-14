@@ -14,7 +14,7 @@ data class Table(
     val count: Int
         get() = dishes?.size ?: 0
 
-    fun addDishToTable(dish: Dish) {
+    fun addDish(dish: Dish) {
         if (dishes != null) {
             dishes?.add(dish)
         }

@@ -16,13 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.DishPagerActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
         <activity android:name=".activity.DishesAvailableActivity">
         </activity>
         <activity android:name=".activity.AddDishDetailActivity">
+        </activity>
+        <activity
+            android:name=".activity.DishListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

@@ -3,8 +3,8 @@ package com.ammyt.disher.activity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -54,7 +54,7 @@ class AddDishDetailActivity : AppCompatActivity() {
     private fun addDish(dish: Dish?) {
         if (dish != null) {
             val table = intent.getSerializableExtra(TABLE_TO_ADD_DISH) as? Table
-            table?.addDishToTable(dish)
+            table?.addDish(dish)
 
             val returnIntent = Intent()
             returnIntent.putExtra(TABLE_TO_ADD_DISH, table)

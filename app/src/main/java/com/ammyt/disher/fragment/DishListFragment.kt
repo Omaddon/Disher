@@ -4,6 +4,7 @@ import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -19,14 +20,14 @@ import com.ammyt.disher.model.Table
 
 class DishListFragment : Fragment() {
 
-    lateinit var root: View
-    lateinit var dishRecyclerView: RecyclerView
+    private lateinit var root: View
+    private lateinit var dishRecyclerView: RecyclerView
     private var onAddDishToTable: OnAddDishToTable? = null
 
     companion object {
         private val TABLE_ARG = "TABLE_ARG"
 
-        fun newInstance(table: Table): DishListFragment {
+        fun newInstance(table: Table?): DishListFragment {
             val argument = Bundle()
             argument.putSerializable(TABLE_ARG, table)
 
@@ -51,16 +52,6 @@ class DishListFragment : Fragment() {
             field = value
 
             if (value != null) {
-
-                val adapter = DishRecyclerViewAdapter(value)
-
-                dishRecyclerView.adapter = adapter
-                updateDishList()
-
-                adapter.onClickListener = View.OnClickListener { v: View? ->
-                    // TODO navegar al detalle del plato o no hacer nada (opcional)
-                }
-
                 table?.dishes = value
             }
         }
@@ -85,9 +76,18 @@ class DishListFragment : Fragment() {
                 table = arguments.getSerializable(TABLE_ARG) as? Table
             }
 
+            val adapter = DishRecyclerViewAdapter(dishes)
+            dishRecyclerView.adapter = adapter
+
+            adapter.onClickListener = View.OnClickListener { v: View? ->
+                // TODO navegar al detalle del plato o no hacer nada (opcional)
+            }
+
             root.findViewById<FloatingActionButton>(R.id.show_dishes_available)?.setOnClickListener { v: View? ->
                 onAddDishToTable?.showDishAvailable(table)
             }
+
+            updateToolbarDishName()
         }
 
         return root
@@ -107,8 +107,20 @@ class DishListFragment : Fragment() {
         onAddDishToTable = null
     }
 
-    fun updateDishList() {
-        dishRecyclerView.adapter.notifyDataSetChanged()
+    fun showTable(newTable: Table) {
+        table = newTable
+
+        val adapter = DishRecyclerViewAdapter(newTable.dishes)
+        dishRecyclerView.adapter = adapter
+
+        updateToolbarDishName()
+    }
+
+    private fun updateToolbarDishName() {
+        if (activity is AppCompatActivity) {
+            val supportActionBar = (activity as? AppCompatActivity)?.supportActionBar
+            supportActionBar?.title = table?.name
+        }
     }
 
     interface OnAddDishToTable {
