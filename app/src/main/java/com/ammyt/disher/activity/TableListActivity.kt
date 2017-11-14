@@ -14,7 +14,8 @@ import com.ammyt.disher.model.Tables
 class TableListActivity :
         AppCompatActivity(),
         TableListFragment.OnTableSelectedListener,
-        DishPagerFragment.DishPagerAdapter {
+        DishPagerFragment.DishPagerAdapter,
+        DishListFragment.OnAddDishToTable {
 
     private lateinit var tableSelected: Table
 
@@ -59,5 +60,11 @@ class TableListActivity :
 
     override fun fragmentToShow(table: Table): Fragment {
         return DishListFragment.newInstance(table)
+    }
+
+    override fun showDishAvailable(table: Table?) {
+        val intent = DishesAvailableActivity.intent(this, table)
+
+        startActivityForResult(intent, DishPagerActivity.REQUEST_DISH_AVAILABLE)
     }
 }

@@ -11,18 +11,17 @@ import com.ammyt.disher.R
 import com.ammyt.disher.fragment.DishListFragment
 import com.ammyt.disher.fragment.DishPagerFragment
 import com.ammyt.disher.model.Table
-import com.ammyt.disher.model.Tables
 
 class DishPagerActivity :
         AppCompatActivity(),
         DishPagerFragment.DishPagerAdapter,
         DishListFragment.OnAddDishToTable {
 
-    val tableIndex by lazy { intent.getIntExtra(TABLE_INDEX_EXTRA, 0) }
+    private lateinit var dishListFragment: DishListFragment
 
     companion object {
         private val TABLE_INDEX_EXTRA = "TABLE_INDEX_EXTRA"
-        private val REQUEST_DISH_AVAILABLE = 1
+        val REQUEST_DISH_AVAILABLE = 1
 
         fun intent(context: Context, tableIndex: Int): Intent {
             val intent = Intent(context, DishPagerActivity::class.java)
@@ -41,6 +40,7 @@ class DishPagerActivity :
         setSupportActionBar(toolbar)
 
         if (fragmentManager.findFragmentById(R.id.dish_pager_fragment) == null) {
+            val tableIndex = intent.getIntExtra(TABLE_INDEX_EXTRA, 0)
             val dishPagerFragment = DishPagerFragment.newInstance(tableIndex)
             fragmentManager.beginTransaction()
                     .add(R.id.dish_pager_fragment, dishPagerFragment)
@@ -48,12 +48,21 @@ class DishPagerActivity :
         }
     }
 
+    override fun onAttachFragment(fragment: Fragment?) {
+        super.onAttachFragment(fragment)
+
+        // TODO REVISAR: eliminar?
+        if (fragment is DishListFragment) {
+            //dishListFragment = fragment
+        }
+    }
+
     override fun fragmentToShow(table: Table): Fragment {
         return DishListFragment.newInstance(table)
     }
 
-    override fun showDishAvailable() {
-        val intent = DishesAvailableActivity.intent(this, Tables.get(tableIndex))
+    override fun showDishAvailable(table: Table?) {
+        val intent = DishesAvailableActivity.intent(this, table)
 
         startActivityForResult(intent, REQUEST_DISH_AVAILABLE)
     }
@@ -64,6 +73,11 @@ class DishPagerActivity :
         if (requestCode == REQUEST_DISH_AVAILABLE) {
             if (resultCode == Activity.RESULT_OK) {
                 // TODO llamar a método de DishListFragment.updateDishList()
+
+                val table = data?.getSerializableExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH) as? Table
+
+                //dishListFragment.table = table
+                //dishListFragment.updateDishList()
             }
         }
     }

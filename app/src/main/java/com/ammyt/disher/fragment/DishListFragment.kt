@@ -53,7 +53,9 @@ class DishListFragment : Fragment() {
             if (value != null) {
 
                 val adapter = DishRecyclerViewAdapter(value)
+
                 dishRecyclerView.adapter = adapter
+                updateDishList()
 
                 adapter.onClickListener = View.OnClickListener { v: View? ->
                     // TODO navegar al detalle del plato o no hacer nada (opcional)
@@ -83,8 +85,8 @@ class DishListFragment : Fragment() {
                 table = arguments.getSerializable(TABLE_ARG) as? Table
             }
 
-            root.findViewById<FloatingActionButton>(R.id.show_dishes_available).setOnClickListener { v: View? ->
-                onAddDishToTable?.showDishAvailable()
+            root.findViewById<FloatingActionButton>(R.id.show_dishes_available)?.setOnClickListener { v: View? ->
+                onAddDishToTable?.showDishAvailable(table)
             }
         }
 
@@ -110,6 +112,6 @@ class DishListFragment : Fragment() {
     }
 
     interface OnAddDishToTable {
-        fun showDishAvailable()
+        fun showDishAvailable(table: Table?)
     }
 }

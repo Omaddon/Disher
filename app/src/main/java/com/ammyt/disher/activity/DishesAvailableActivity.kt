@@ -22,7 +22,7 @@ class DishesAvailableActivity : AppCompatActivity() {
         private val REQUEST_DISH_FOR_ADD = 1
         private val TABLE_FOR_DISH_AVAILABLE_LIST_EXTRA = "TABLE_FOR_DISH_AVAILABLE_LIST_EXTRA"
 
-        fun intent(context: Context, table: Table): Intent {
+        fun intent(context: Context, table: Table?): Intent {
             val intent = Intent(context, DishesAvailableActivity::class.java)
             intent.putExtra(TABLE_FOR_DISH_AVAILABLE_LIST_EXTRA, table)
 
