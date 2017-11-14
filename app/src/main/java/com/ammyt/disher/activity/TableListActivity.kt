@@ -1,10 +1,13 @@
 package com.ammyt.disher.activity
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.ViewSwitcher
 import com.ammyt.disher.*
 import com.ammyt.disher.fragment.DishListFragment
 import com.ammyt.disher.fragment.TableListFragment
@@ -26,13 +29,26 @@ class TableListActivity :
         DishListFragment.OnAddDishToTable {
 
     private var tableSelectedIndex: Int = 0
+    private lateinit var viewSwitcher: ViewSwitcher
+
+    enum class VIEW_INDEX(val index: Int) {
+        LOADING(0),
+        VIEW(1)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_table_list)
 
+        viewSwitcher = findViewById(R.id.view_switcher)
+        viewSwitcher.setInAnimation(this, android.R.anim.fade_in)
+        viewSwitcher.setOutAnimation(this, android.R.anim.fade_out)
+
         if (DishesAvailable.getDishesAvailable().isEmpty()) {
             updateDishesAvailable()
+        }
+        else {
+            viewSwitcher.displayedChild = VIEW_INDEX.VIEW.index
         }
 
         if (findViewById<View>(R.id.table_list_fragment) != null) {
@@ -56,7 +72,8 @@ class TableListActivity :
 
     private fun updateDishesAvailable() {
 
-        // TODO avisar al usuario de que vamos a descargar datos
+        viewSwitcher.displayedChild = VIEW_INDEX.LOADING.index
+
         async(UI) {
             val dishesAvailable: Deferred<List<Dish>?> = bg {
                 downloadDishesAvailable()
@@ -64,18 +81,31 @@ class TableListActivity :
 
             val downloadedDishes = dishesAvailable.await()
 
-            // TODO avisar al usuario de descarga éxito/fallo
             if (downloadedDishes != null) {
-                // Ha ido bien. Avisamos al usuario de la descarga (snackBar)
+                viewSwitcher.displayedChild = VIEW_INDEX.VIEW.index
+                Snackbar.make(findViewById<View>(android.R.id.content), "Dishes downloaded!", Snackbar.LENGTH_LONG)
+                        .show()
             }
             else {
-                // Error en la descarga
+                AlertDialog.Builder(this@TableListActivity)
+                        .setTitle("Error")
+                        .setMessage("Error downloading dishes from API.")
+                        .setPositiveButton("Retry?", { dialog, which ->
+                            dialog.dismiss()
+                            updateDishesAvailable()
+                        })
+                        .setNegativeButton("Exit", { dialog, which ->
+                            finish()
+                        })
+                        .show()
             }
         }
     }
 
     private fun downloadDishesAvailable(): List<Dish>? {
         try {
+
+            Thread.sleep(2000)
 
             val url = URL(dishesURL)
             val jsonString = Scanner(url.openStream(), "UTF-8").useDelimiter("\\A").next()
