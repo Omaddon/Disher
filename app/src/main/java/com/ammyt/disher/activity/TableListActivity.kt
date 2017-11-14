@@ -1,10 +1,9 @@
 package com.ammyt.disher.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.View
 import com.ammyt.disher.R
 import com.ammyt.disher.fragment.DishListFragment
@@ -17,12 +16,13 @@ class TableListActivity :
         TableListFragment.OnTableSelectedListener,
         DishListFragment.OnAddDishToTable {
 
+    private var tableSelectedIndex: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_table_list)
 
         // TODO descargar lista de posibles platos
-        // TODO crear opción para navegar en 400dp Portrait
 
         if (findViewById<View>(R.id.table_list_fragment) != null) {
             if (fragmentManager.findFragmentById(R.id.table_list_fragment) == null) {
@@ -35,7 +35,7 @@ class TableListActivity :
 
         if (findViewById<View>(R.id.dish_list_fragment) != null) {
             if (fragmentManager.findFragmentById(R.id.dish_list_fragment) == null) {
-                val dishListFragment = DishListFragment.newInstance(Tables.get(0), 0)
+                val dishListFragment = DishListFragment.newInstance(Tables.get(tableSelectedIndex), tableSelectedIndex)
                 fragmentManager.beginTransaction()
                         .add(R.id.dish_list_fragment, dishListFragment)
                         .commit()
@@ -50,7 +50,8 @@ class TableListActivity :
             startActivity(DishListActivity.intent(this, table, position))
         }
         else {
-            table?.let { dishListFragment.showTable(it) }
+            tableSelectedIndex = position
+            table?.let { dishListFragment.showTable(it, position) }
 
         }
     }
@@ -63,6 +64,22 @@ class TableListActivity :
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        // TODO implementar
+
+        if (requestCode == DishListActivity.REQUEST_DISH_AVAILABLE) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
+                val newTable = data?.getSerializableExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH) as? Table
+                val tableIndex = data?.getIntExtra(AddDishDetailActivity.TABLE_INDEX_TO_SEND, 0)
+
+                dishListFragment?.let {
+                    if (newTable != null) {
+                        if (tableIndex != null) {
+                            it.showTable(newTable, tableIndex)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

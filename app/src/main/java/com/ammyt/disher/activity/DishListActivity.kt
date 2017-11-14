@@ -59,10 +59,13 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable 
 
                 val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
                 val newTable = data?.getSerializableExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH) as? Table
+                val tableIndex = data?.getIntExtra(AddDishDetailActivity.TABLE_INDEX_TO_SEND, 0)
 
                 dishListFragment?.let {
                     if (newTable != null) {
-                        it.showTable(newTable)
+                        if (tableIndex != null) {
+                            it.showTable(newTable, tableIndex)
+                        }
                     }
                 }
             }

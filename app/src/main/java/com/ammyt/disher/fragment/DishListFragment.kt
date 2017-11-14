@@ -8,10 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 
 import com.ammyt.disher.R
 import com.ammyt.disher.adapter.DishRecyclerViewAdapter
@@ -19,11 +16,13 @@ import com.ammyt.disher.model.Dish
 import com.ammyt.disher.model.Table
 import com.ammyt.disher.model.Tables
 
-
+// TODO revisar qué DishList mostrar al recrear la actividad tras girar el dispositivo
 class DishListFragment : Fragment() {
 
     private lateinit var root: View
     private lateinit var dishRecyclerView: RecyclerView
+    private var menu: Menu? = null
+    private var tableIndex: Int = 0
     private var onAddDishToTable: OnAddDishToTable? = null
 
     companion object {
@@ -78,6 +77,7 @@ class DishListFragment : Fragment() {
 
             if (arguments != null) {
                 table = arguments.getSerializable(TABLE_ARG) as? Table
+                tableIndex = arguments.getInt(TABLEINDEX_ARG)
             }
 
             val adapter = DishRecyclerViewAdapter(dishes)
@@ -88,13 +88,54 @@ class DishListFragment : Fragment() {
             }
 
             root.findViewById<FloatingActionButton>(R.id.show_dishes_available)?.setOnClickListener { v: View? ->
-                arguments?.let { onAddDishToTable?.showDishAvailable(it.getInt(TABLEINDEX_ARG)) }
+                onAddDishToTable?.showDishAvailable(tableIndex)
             }
 
             updateToolbarDishName()
         }
 
         return root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        this.menu = menu
+
+        inflater?.inflate(R.menu.pager, menu)
+        onPrepareShowMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.next -> {
+                tableIndex = tableIndex + 1
+                val newTable = Tables.get(tableIndex)
+                showTable(newTable, tableIndex)
+
+                return true
+
+            }
+            R.id.previous -> {
+                tableIndex = tableIndex - 1
+                val newTable = Tables.get(tableIndex)
+                showTable(newTable, tableIndex)
+
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun onPrepareShowMenu(menu: Menu?) {
+        super.onPrepareOptionsMenu(menu)
+
+        val menuPrev = menu?.findItem(R.id.previous)
+        val menuNext = menu?.findItem(R.id.next)
+
+        menuPrev?.setEnabled(tableIndex > 0)
+        menuNext?.setEnabled(tableIndex < Tables.count - 1)
     }
 
     override fun onAttach(context: Context?) {
@@ -111,13 +152,16 @@ class DishListFragment : Fragment() {
         onAddDishToTable = null
     }
 
-    fun showTable(newTable: Table) {
+    fun showTable(newTable: Table, newTableIndex: Int) {
         table = newTable
+        tableIndex = newTableIndex
 
         val adapter = DishRecyclerViewAdapter(newTable.dishes)
         dishRecyclerView.adapter = adapter
 
+
         updateToolbarDishName()
+        onPrepareShowMenu(menu)
     }
 
     private fun updateToolbarDishName() {

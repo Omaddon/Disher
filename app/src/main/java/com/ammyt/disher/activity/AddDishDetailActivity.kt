@@ -16,6 +16,7 @@ class AddDishDetailActivity : AppCompatActivity() {
 
     companion object {
         val TABLE_TO_ADD_DISH = "TABLE_TO_ADD_DISH"
+        val TABLE_INDEX_TO_SEND = "TABLE_INDEX_TO_SEND"
         private val DISH_TO_SHOW = "DISH_TO_SHOW"
 
         fun intent(context: Context, tableIndex: Int, dish: Dish): Intent {
@@ -59,6 +60,7 @@ class AddDishDetailActivity : AppCompatActivity() {
 
             val returnIntent = Intent()
             returnIntent.putExtra(TABLE_TO_ADD_DISH, table)
+            returnIntent.putExtra(TABLE_INDEX_TO_SEND, tableIndex)
 
             setResult(Activity.RESULT_OK, returnIntent)
             finish()

@@ -55,23 +55,31 @@ class DishesAvailableActivity : AppCompatActivity() {
 
         if (requestCode == REQUEST_DISH_FOR_ADD) {
             if (resultCode == Activity.RESULT_OK) {
-                val returnIntent = Intent()
-                val table = data?.getSerializableExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH)
 
-                if (table != null) {
-                    returnIntent.putExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH, table)
-                    setResult(Activity.RESULT_OK, returnIntent)
+                if (data != null) {
+                    setResult(Activity.RESULT_OK, data)
                 }
                 else {
                     setResult(Activity.RESULT_CANCELED)
                 }
 
-                finish()
+//                val returnIntent = Intent()
+//                val table = data?.getSerializableExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH)
+//
+//                if (table != null) {
+//                    returnIntent.putExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH, table)
+//                    setResult(Activity.RESULT_OK, returnIntent)
+//                }
+//                else {
+//                    setResult(Activity.RESULT_CANCELED)
+//                }
+//
             }
             else {
                 setResult(Activity.RESULT_CANCELED)
-                finish()
             }
+
+            finish()
         }
     }
 }
