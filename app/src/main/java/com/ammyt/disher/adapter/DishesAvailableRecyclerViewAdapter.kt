@@ -31,7 +31,7 @@ class DishesAvailableRecyclerViewAdapter :
 
 
     inner class DishesAvailableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+        // TODO montar los datos correctos desde el modelo
         val name = itemView.findViewById<TextView>(R.id.dish_available_name)
 
         fun bindDishAvailable(position: Int) {

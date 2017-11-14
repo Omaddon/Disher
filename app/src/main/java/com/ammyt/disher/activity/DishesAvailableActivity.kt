@@ -53,27 +53,16 @@ class DishesAvailableActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        // TODO revisar qué hacer tras añadir un plato... volver a DishList o Añadir otro?
+        // TODO avisar al usuario que ha sido añadido/cancelado un plato
         if (requestCode == REQUEST_DISH_FOR_ADD) {
             if (resultCode == Activity.RESULT_OK) {
-
                 if (data != null) {
                     setResult(Activity.RESULT_OK, data)
                 }
                 else {
                     setResult(Activity.RESULT_CANCELED)
                 }
-
-//                val returnIntent = Intent()
-//                val table = data?.getSerializableExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH)
-//
-//                if (table != null) {
-//                    returnIntent.putExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH, table)
-//                    setResult(Activity.RESULT_OK, returnIntent)
-//                }
-//                else {
-//                    setResult(Activity.RESULT_CANCELED)
-//                }
-//
             }
             else {
                 setResult(Activity.RESULT_CANCELED)

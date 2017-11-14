@@ -1,0 +1,101 @@
+{ "dishes" : [
+    {
+      "name": "Cerveza",
+      "image": 0,
+      "allergen": [0, 10, 11],
+      "price": 2.0,
+      "description": "Manjar de dioses. Tan antigua como la humanidad. Nada puede compararse a un buen trago de cerveza!!"
+    },
+    {
+      "name": "Ensalada Caesar",
+      "image": 1,
+      "allergen": [9, 10, 13],
+      "price": 7.50,
+      "description": "La mejor ensalada del chef para los paladares exquisitos."
+    },
+    {
+      "name": "Rollitos de pollo primavera",
+      "image": 2,
+      "allergen": [4, 8],
+      "price": 11.25,
+      "description": "Deliciosos rollitos de pollo con especias y salsa. No dudes en probarlos!! Es una delicida que que tu paladar agradecerá!!"
+    },
+    {
+      "name": "Coca-Cola",
+      "image": 3,
+      "allergen": [12],
+      "price": 2.50,
+      "description": "Nada como una buena y clásica CocaCola para que el día sepa mejor."
+    },
+    {
+      "name": "Croquetas caseras",
+      "image": 4,
+      "allergen": [2, 4, 6],
+      "price": 9.00,
+      "description": "Como las que hacía tu madre!! Croquetas caseras que no podrás olvidar. No sobrará ni una!!"
+    },
+    {
+      "name": "Dimsun",
+      "image": 5,
+      "allergen": [0, 3, 10, 11],
+      "price": 18.99,
+      "description": "Pequeños manjares que no puedes dejar pasar. Tu vida cambiará tras probarlos!!"
+    },
+    {
+      "name": "Macarrones caseros",
+      "image": 6,
+      "allergen": [],
+      "price": 11.00,
+      "description": "Si no se te saltan las lágrimas al probarlos, te devolvemos el dinero!!"
+    },
+    {
+      "name": "Paella valenciana",
+      "image": 7,
+      "allergen": [1, 3, 7],
+      "price": 19.50,
+      "description": "Clásica paella valenciana. Gracias a esta gran receta nuestras playas están llenas."
+    },
+    {
+      "name": "Sushi",
+      "image": 8,
+      "allergen": [3, 7, 10, 11],
+      "price": 7.50,
+      "description": "Traído del mismísimo sol poniente!!"
+    },
+    {
+      "name": "Vino",
+      "image": 9,
+      "allergen": [5],
+      "price": 6.75,
+      "description": "No puede faltar un buen vino para acompañar la comida!"
+    },
+    {
+      "name": "Tarta de queso",
+      "image": 10,
+      "allergen": [4, 6],
+      "price": 4.50,
+      "description": "Deliciosa tarta de queso casera, la envidia de todos los postres!!"
+    },
+    {
+      "name": "Bacalao",
+      "image": 11,
+      "allergen": [3, 6, 13],
+      "price": 17.90,
+      "description": "Bacalao con salsa de tomate, una delicia que todo mortal debería saborear al menos una vez en la vida."
+    },
+    {
+      "name": "Huevos fritos",
+      "image": 12,
+      "allergen": [2, 4],
+      "price": 7.50,
+      "description": "Tan solo el nombre de este playo ya consigue dibujar una sonrisa."
+    },
+    {
+      "name": "Helado",
+      "image": 13,
+      "allergen": [4, 6, 13],
+      "price": 6.50,
+      "description": "La mejor forma de acabar la comida."
+    }
+  ]
+}
