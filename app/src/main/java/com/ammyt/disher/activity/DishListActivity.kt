@@ -14,11 +14,13 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable 
 
     companion object {
         private val TABLE_EXTRA = "TABLE_EXTRA"
+        private val TABLEINDEX_EXTRA = "TABLEINDEX_EXTRA"
         val REQUEST_DISH_AVAILABLE = 1
 
-        fun intent(context: Context, table: Table?): Intent {
+        fun intent(context: Context, table: Table?, tableIndex: Int): Intent {
             val intent = Intent(context, DishListActivity::class.java)
             intent.putExtra(TABLE_EXTRA, table)
+            intent.putExtra(TABLEINDEX_EXTRA, tableIndex)
 
             return intent
         }
@@ -34,15 +36,17 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable 
 
         if (fragmentManager.findFragmentById(R.id.dish_list_fragment) == null) {
             val table = intent.getSerializableExtra(TABLE_EXTRA) as? Table
-            val dishListFragment = DishListFragment.newInstance(table)
+            val tableIndex = intent.getIntExtra(TABLEINDEX_EXTRA, 0)
+
+            val dishListFragment = DishListFragment.newInstance(table, tableIndex)
             fragmentManager.beginTransaction()
                     .add(R.id.dish_list_fragment, dishListFragment)
                     .commit()
         }
     }
 
-    override fun showDishAvailable(table: Table?) {
-        val intent = DishesAvailableActivity.intent(this, table)
+    override fun showDishAvailable(tableIndex: Int) {
+        val intent = DishesAvailableActivity.intent(this, tableIndex)
 
         startActivityForResult(intent, REQUEST_DISH_AVAILABLE)
     }
@@ -57,7 +61,9 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable 
                 val newTable = data?.getSerializableExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH) as? Table
 
                 dishListFragment?.let {
-                    if (newTable != null) { it.showTable(newTable) }
+                    if (newTable != null) {
+                        it.showTable(newTable)
+                    }
                 }
             }
         }

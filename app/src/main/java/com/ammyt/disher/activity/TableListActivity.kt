@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.View
 import com.ammyt.disher.R
 import com.ammyt.disher.fragment.DishListFragment
@@ -21,6 +22,7 @@ class TableListActivity :
         setContentView(R.layout.activity_table_list)
 
         // TODO descargar lista de posibles platos
+        // TODO crear opción para navegar en 400dp Portrait
 
         if (findViewById<View>(R.id.table_list_fragment) != null) {
             if (fragmentManager.findFragmentById(R.id.table_list_fragment) == null) {
@@ -33,7 +35,7 @@ class TableListActivity :
 
         if (findViewById<View>(R.id.dish_list_fragment) != null) {
             if (fragmentManager.findFragmentById(R.id.dish_list_fragment) == null) {
-                val dishListFragment = DishListFragment.newInstance(Tables.get(0))
+                val dishListFragment = DishListFragment.newInstance(Tables.get(0), 0)
                 fragmentManager.beginTransaction()
                         .add(R.id.dish_list_fragment, dishListFragment)
                         .commit()
@@ -45,8 +47,7 @@ class TableListActivity :
         val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
 
         if (dishListFragment == null) {
-            // TODO revisar, modificado Tables.get(position) en lugar de table
-            startActivity(DishListActivity.intent(this, Tables.get(position)))
+            startActivity(DishListActivity.intent(this, table, position))
         }
         else {
             table?.let { dishListFragment.showTable(it) }
@@ -54,8 +55,8 @@ class TableListActivity :
         }
     }
 
-    override fun showDishAvailable(table: Table?) {
-        val intent = DishesAvailableActivity.intent(this, table)
+    override fun showDishAvailable(tableIndex: Int) {
+        val intent = DishesAvailableActivity.intent(this, tableIndex)
 
         startActivityForResult(intent, DishListActivity.REQUEST_DISH_AVAILABLE)
     }

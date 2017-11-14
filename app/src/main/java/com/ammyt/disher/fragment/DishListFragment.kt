@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.ammyt.disher.R
 import com.ammyt.disher.adapter.DishRecyclerViewAdapter
 import com.ammyt.disher.model.Dish
 import com.ammyt.disher.model.Table
+import com.ammyt.disher.model.Tables
 
 
 class DishListFragment : Fragment() {
@@ -26,10 +28,12 @@ class DishListFragment : Fragment() {
 
     companion object {
         private val TABLE_ARG = "TABLE_ARG"
+        private val TABLEINDEX_ARG = "TABLEINDEX_ARG"
 
-        fun newInstance(table: Table?): DishListFragment {
+        fun newInstance(table: Table?, tableIndex: Int): DishListFragment {
             val argument = Bundle()
             argument.putSerializable(TABLE_ARG, table)
+            argument.putInt(TABLEINDEX_ARG, tableIndex)
 
             val dishListFragment = DishListFragment()
             dishListFragment.arguments = argument
@@ -84,7 +88,7 @@ class DishListFragment : Fragment() {
             }
 
             root.findViewById<FloatingActionButton>(R.id.show_dishes_available)?.setOnClickListener { v: View? ->
-                onAddDishToTable?.showDishAvailable(table)
+                arguments?.let { onAddDishToTable?.showDishAvailable(it.getInt(TABLEINDEX_ARG)) }
             }
 
             updateToolbarDishName()
@@ -124,6 +128,6 @@ class DishListFragment : Fragment() {
     }
 
     interface OnAddDishToTable {
-        fun showDishAvailable(table: Table?)
+        fun showDishAvailable(tableIndex: Int)
     }
 }

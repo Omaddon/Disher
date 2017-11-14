@@ -6,7 +6,7 @@ import java.io.Serializable
 
 data class Dish(
         var name: String,
-        var image: Int?,
+        var image: Int,
         var allergen: List<Allergen>?,
         var price: Float,
         var description: String? = "No description available.") : Serializable {

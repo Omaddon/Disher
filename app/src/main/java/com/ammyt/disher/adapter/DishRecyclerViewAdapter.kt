@@ -41,7 +41,7 @@ class DishRecyclerViewAdapter(val dishList: List<Dish>?) :
         fun bindDish(dish: Dish, position: Int) {
             val context = itemView.context
 
-            dishImage.setImageResource(dish.drawableDish(dish.image))
+            dishImage.setImageResource(dish.image)
             dishName.text = dish.name
         }
     }

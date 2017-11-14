@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.ammyt.disher.R
 import com.ammyt.disher.model.Dish
-import com.ammyt.disher.model.Table
+import com.ammyt.disher.model.Tables
 
 class AddDishDetailActivity : AppCompatActivity() {
 
@@ -18,9 +18,9 @@ class AddDishDetailActivity : AppCompatActivity() {
         val TABLE_TO_ADD_DISH = "TABLE_TO_ADD_DISH"
         private val DISH_TO_SHOW = "DISH_TO_SHOW"
 
-        fun intent(context: Context, table: Table?, dish: Dish): Intent {
+        fun intent(context: Context, tableIndex: Int, dish: Dish): Intent {
             val intent = Intent(context, AddDishDetailActivity::class.java)
-            intent.putExtra(TABLE_TO_ADD_DISH, table)
+            intent.putExtra(TABLE_TO_ADD_DISH, tableIndex)
             intent.putExtra(DISH_TO_SHOW, dish)
 
             return intent
@@ -53,8 +53,9 @@ class AddDishDetailActivity : AppCompatActivity() {
 
     private fun addDish(dish: Dish?) {
         if (dish != null) {
-            val table = intent.getSerializableExtra(TABLE_TO_ADD_DISH) as? Table
-            table?.addDish(dish)
+            val tableIndex = intent.getIntExtra(TABLE_TO_ADD_DISH, 0)
+            val table = Tables.get(tableIndex)
+            table.addDish(dish)
 
             val returnIntent = Intent()
             returnIntent.putExtra(TABLE_TO_ADD_DISH, table)
