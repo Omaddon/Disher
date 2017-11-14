@@ -16,7 +16,7 @@ import com.ammyt.disher.model.Dish
 import com.ammyt.disher.model.Table
 import com.ammyt.disher.model.Tables
 
-// TODO revisar qué DishList mostrar al recrear la actividad tras girar el dispositivo
+
 class DishListFragment : Fragment() {
 
     private lateinit var root: View
@@ -84,7 +84,7 @@ class DishListFragment : Fragment() {
             dishRecyclerView.adapter = adapter
 
             adapter.onClickListener = View.OnClickListener { v: View? ->
-                // TODO navegar al detalle del plato o no hacer nada (opcional)
+                // TODO navegar al detalle del plato para borrar o no hacer nada (opcional)
             }
 
             root.findViewById<FloatingActionButton>(R.id.show_dishes_available)?.setOnClickListener { v: View? ->
