@@ -66,6 +66,7 @@ class DishesAvailableActivity : AppCompatActivity() {
                 }
             }
             else {
+                // TODO cuando se cancela el añadir un plato nuevo, NO volver a la lista de platos de la mesa
                 setResult(Activity.RESULT_CANCELED)
             }
 

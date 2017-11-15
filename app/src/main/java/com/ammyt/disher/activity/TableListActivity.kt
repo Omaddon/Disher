@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ViewSwitcher
 import com.ammyt.disher.*
+import com.ammyt.disher.Allergen.drawableDish
+import com.ammyt.disher.Allergen.toAllergen
 import com.ammyt.disher.fragment.DishListFragment
 import com.ammyt.disher.fragment.TableListFragment
 import com.ammyt.disher.model.Dish
@@ -148,7 +150,7 @@ class TableListActivity :
                 val description = jsonDish.getString("description")
 
                 val jsonAllergen = jsonDish.getJSONArray("allergen")
-                val allergenList: MutableList<Allergen> = mutableListOf()
+                val allergenList: MutableList<Allergen.AllergenList> = mutableListOf()
 
                 for (allergenIndex in 0..jsonAllergen.length() - 1) {
                     val allergen = toAllergen(jsonAllergen.getInt(allergenIndex))

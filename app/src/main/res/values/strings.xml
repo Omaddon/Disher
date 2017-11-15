@@ -3,5 +3,7 @@
     <string name="previous">Previous</string>
     <string name="next">Next</string>
     <string name="add_dish">Add Dish</string>
-
+    <string name="dish_image_description">Dish image</string>
+    <string name="allergen_image">Allergen image</string>
+    <string name="dish_price">%.2f €</string>
 </resources>
