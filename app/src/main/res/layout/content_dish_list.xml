@@ -10,22 +10,22 @@
         android:id="@+id/dish_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="@dimen/margin_default"
         android:layout_marginStart="@dimen/margin_small"
-        android:layout_marginTop="@dimen/margin_small"
+        android:gravity="start|center_vertical"
         app:layout_constraintBottom_toBottomOf="@+id/dish_image"
         app:layout_constraintEnd_toStartOf="@+id/dish_price"
         app:layout_constraintStart_toEndOf="@+id/dish_image"
         app:layout_constraintTop_toTopOf="@+id/dish_image"
-        tools:text="dish with a very long name"
-        android:layout_marginLeft="@dimen/margin_small"
-        android:layout_marginRight="@dimen/margin_default"/>
+        tools:text="Dish with a very long name"
+        android:layout_marginRight="@dimen/margin_default"
+        android:layout_marginLeft="@dimen/margin_small"/>
 
     <ImageView
         android:id="@+id/dish_image"
         android:layout_width="@dimen/dish_list_image_size"
         android:layout_height="@dimen/dish_list_image_size"
+        android:contentDescription="@string/dish_image_description"
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginTop="@dimen/margin_small"
         app:layout_constraintStart_toStartOf="parent"

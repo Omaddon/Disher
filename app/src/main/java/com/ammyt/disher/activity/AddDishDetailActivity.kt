@@ -44,7 +44,7 @@ class AddDishDetailActivity : AppCompatActivity() {
             val image = findViewById<ImageView>(R.id.dish_image)
             val name = findViewById<TextView>(R.id.dish_name)
             val price = findViewById<TextView>(R.id.dish_price)
-            val description = findViewById<TextView>(R.id.dish_description)
+            val description = findViewById<TextView>(R.id.dish_options)
 
             image.setImageResource(it.image)
             name.text = it.name
