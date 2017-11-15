@@ -6,4 +6,8 @@
     <dimen name="distance_between_allergen_images">4dp</dimen>
     <dimen name="dish_list_image_size">40dp</dimen>
     <dimen name="margin_small">8dp</dimen>
+    <dimen name="dish_detail_image_size">150dp</dimen>
+    <dimen name="dish_detail_name_size">20sp</dimen>
+    <dimen name="dish_detail_price_size">18sp</dimen>
+    <dimen name="dish_detail_description_size">16sp</dimen>
 </resources>

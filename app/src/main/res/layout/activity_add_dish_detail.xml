@@ -7,28 +7,251 @@
     android:layout_height="match_parent"
     tools:context="com.ammyt.disher.activity.AddDishDetailActivity">
 
+    <TextView
+        android:id="@+id/dish_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_small"
+        android:textSize="@dimen/dish_detail_name_size"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dish_image"
+        app:layout_constraintTop_toTopOf="@+id/dish_image"
+        tools:text="Dish name very very very long"/>
+
     <ImageView
-        android:id="@+id/dish_detail_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/dish_image"
+        android:layout_width="@dimen/dish_detail_image_size"
+        android:layout_height="@dimen/dish_detail_image_size"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
+        android:contentDescription="@string/dish_image_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/error"/>
+        app:srcCompat="@drawable/error"
+        android:layout_marginLeft="@dimen/margin_small"/>
 
     <TextView
-        android:id="@+id/dish_detail_name"
-        android:layout_width="wrap_content"
+        android:id="@+id/dish_price"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/dish_detail_image"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dish_detail_image"
-        app:layout_constraintTop_toTopOf="@+id/dish_detail_image"/>
+        app:layout_constraintStart_toStartOf="@+id/dish_name"
+        app:layout_constraintTop_toBottomOf="@+id/dish_name"
+        tools:text="19.50 €"
+        android:textSize="@dimen/dish_detail_price_size"
+        android:layout_marginRight="@dimen/margin_small"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/allergen_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
+        app:layout_constraintBottom_toBottomOf="@+id/dish_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/dish_price"
+        app:layout_constraintTop_toBottomOf="@+id/dish_price"
+        android:layout_marginRight="@dimen/margin_small">
+
+        <ImageView
+            android:id="@+id/allergen_celery_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:srcCompat="@drawable/allergen_celery"/>
+
+        <ImageView
+            android:id="@+id/allergen_crustacean_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginTop="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/allergen_celery_image"
+            app:srcCompat="@drawable/allergen_crustacean"/>
+
+        <ImageView
+            android:id="@+id/allergen_egg_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginStart="@dimen/distance_between_allergen_images"
+            android:layout_marginLeft="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintStart_toEndOf="@+id/allergen_celery_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/allergen_egg"/>
+
+        <ImageView
+            android:id="@+id/allergen_fish_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginStart="@dimen/distance_between_allergen_images"
+            android:layout_marginTop="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/allergen_crustacean_image"
+            app:layout_constraintTop_toBottomOf="@+id/allergen_egg_image"
+            app:srcCompat="@drawable/allergen_fish"
+            android:layout_marginLeft="@dimen/distance_between_allergen_images"/>
+
+        <ImageView
+            android:id="@+id/allergen_gluten_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginStart="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintStart_toEndOf="@+id/allergen_egg_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/allergen_gluten"
+            android:layout_marginLeft="@dimen/distance_between_allergen_images"/>
+
+        <ImageView
+            android:id="@+id/allergen_lupin_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginStart="@dimen/distance_between_allergen_images"
+            android:layout_marginTop="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/allergen_fish_image"
+            app:layout_constraintTop_toBottomOf="@+id/allergen_gluten_image"
+            app:srcCompat="@drawable/allergen_lupin"
+            android:layout_marginLeft="@dimen/distance_between_allergen_images"/>
+
+        <ImageView
+            android:id="@+id/allergen_milk_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginStart="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintStart_toEndOf="@+id/allergen_gluten_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/allergen_milk"
+            android:layout_marginLeft="@dimen/distance_between_allergen_images"/>
+
+        <ImageView
+            android:id="@+id/allergen_mollusc_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginStart="@dimen/distance_between_allergen_images"
+            android:layout_marginTop="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/allergen_lupin_image"
+            app:layout_constraintTop_toBottomOf="@+id/allergen_milk_image"
+            app:srcCompat="@drawable/allergen_mollusc"
+            android:layout_marginLeft="@dimen/distance_between_allergen_images"/>
+
+        <ImageView
+            android:id="@+id/allergen_mustard_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginStart="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintStart_toEndOf="@+id/allergen_milk_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/allergen_mustard"
+            android:layout_marginLeft="@dimen/distance_between_allergen_images"/>
+
+        <ImageView
+            android:id="@+id/allergen_peanut_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginStart="@dimen/distance_between_allergen_images"
+            android:layout_marginTop="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/allergen_mollusc_image"
+            app:layout_constraintTop_toBottomOf="@+id/allergen_mustard_image"
+            app:srcCompat="@drawable/allergen_peanut"
+            android:layout_marginLeft="@dimen/distance_between_allergen_images"/>
+
+        <ImageView
+            android:id="@+id/allergen_sesamo_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginStart="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintStart_toEndOf="@+id/allergen_mustard_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/allergen_sesamo"
+            android:layout_marginLeft="@dimen/distance_between_allergen_images"/>
+
+        <ImageView
+            android:id="@+id/allergen_soya_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginStart="@dimen/distance_between_allergen_images"
+            android:layout_marginTop="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/allergen_peanut_image"
+            app:layout_constraintTop_toBottomOf="@+id/allergen_sesamo_image"
+            app:srcCompat="@drawable/allergen_soya"
+            android:layout_marginLeft="@dimen/distance_between_allergen_images"/>
+
+        <ImageView
+            android:id="@+id/allergen_sulphite_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginStart="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintStart_toEndOf="@+id/allergen_sesamo_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/allergen_sulphite"
+            android:layout_marginLeft="@dimen/distance_between_allergen_images"/>
+
+        <ImageView
+            android:id="@+id/allergen_treenuts_image"
+            android:layout_width="@dimen/allergen_image_size"
+            android:layout_height="@dimen/allergen_image_size"
+            android:layout_marginStart="@dimen/distance_between_allergen_images"
+            android:layout_marginTop="@dimen/distance_between_allergen_images"
+            android:contentDescription="@string/allergen_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/allergen_soya_image"
+            app:layout_constraintTop_toBottomOf="@+id/allergen_sulphite_image"
+            app:srcCompat="@drawable/allergen_treenuts"
+            android:layout_marginLeft="@dimen/distance_between_allergen_images"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/dish_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_default"
+        android:textSize="@dimen/dish_detail_description_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dish_image"
+        tools:text="Dish description with a very very very very long description for this awesome dish."/>
+
+    <EditText
+        android:id="@+id/dish_options"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_default"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/dish_options_hint"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/cancel_dish_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dish_description"/>
 
     <Button
         android:id="@+id/add_dish_button"

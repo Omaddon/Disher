@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.ammyt.disher.R
 import com.ammyt.disher.model.Dish
 
-
+// TODO mostrar las opciones de cada plato
 class DishRecyclerViewAdapter(val dishList: List<Dish>?) :
         RecyclerView.Adapter<DishRecyclerViewAdapter.DishListViewHolder>() {
 
