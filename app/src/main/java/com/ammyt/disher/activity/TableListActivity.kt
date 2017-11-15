@@ -30,9 +30,11 @@ class TableListActivity :
         DishListFragment.OnAddDishToTable, DishListFragment.OnDeviceRotate{
 
     private lateinit var viewSwitcher: ViewSwitcher
-    private var tableSelected: Table? = null
 
-    var tableSelectedIndex: Int = 0
+    companion object {
+        private var tableSelected: Table? = null
+        private var tableSelectedIndex: Int = 0
+    }
 
     enum class VIEW_INDEX(val index: Int) {
         LOADING(0),
@@ -66,8 +68,10 @@ class TableListActivity :
         if (findViewById<View>(R.id.dish_list_fragment) != null) {
             val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
 
+            tableSelected = Tables.get(tableSelectedIndex)
+
             if (dishListFragment == null) {
-                val newDishListFragment = DishListFragment.newInstance(Tables.get(tableSelectedIndex), tableSelectedIndex)
+                val newDishListFragment = DishListFragment.newInstance(tableSelected, tableSelectedIndex)
                 fragmentManager.beginTransaction()
                         .add(R.id.dish_list_fragment, newDishListFragment)
                         .commit()
@@ -206,6 +210,9 @@ class TableListActivity :
                 dishListFragment?.let {
                     if (newTable != null) {
                         if (tableIndex != null) {
+                            tableSelected = newTable
+                            tableSelectedIndex = tableIndex
+
                             it.showTable(newTable, tableIndex)
 
                             Snackbar.make(
