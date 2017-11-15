@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.MenuItem
 import android.view.View
 import com.ammyt.disher.R
 import com.ammyt.disher.adapter.DishesAvailableRecyclerViewAdapter
@@ -32,6 +33,8 @@ class DishesAvailableActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dishes_available)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         dishesAvailableRecyclerView = findViewById(R.id.dishes_available_recycler_view)
         dishesAvailableRecyclerView.layoutManager = GridLayoutManager(this, resources.getInteger(R.integer.dishes_available_recycler_colums))
@@ -68,5 +71,14 @@ class DishesAvailableActivity : AppCompatActivity() {
 
             finish()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }

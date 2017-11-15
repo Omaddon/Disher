@@ -185,8 +185,11 @@ class TableListActivity :
             startActivity(DishListActivity.intent(this, table, position))
         }
         else {
-            tableSelectedIndex = position
-            table?.let { dishListFragment.showTable(it, position) }
+            table?.let {
+                tableSelectedIndex = position
+                tableSelected = Tables.get(tableSelectedIndex)
+                dishListFragment.showTable(it, position)
+            }
 
         }
     }

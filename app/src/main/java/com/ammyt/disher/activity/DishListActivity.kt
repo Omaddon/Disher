@@ -43,7 +43,6 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable,
 
         val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
 
-        // TODO revisar qué DishList mostrar al recrear la actividad tras girar el dispositivo
         if (dishListFragment == null) {
             val newTable = intent.getSerializableExtra(TABLE_EXTRA) as? Table
             val newTableIndex = intent.getIntExtra(TABLEINDEX_EXTRA, 0)
