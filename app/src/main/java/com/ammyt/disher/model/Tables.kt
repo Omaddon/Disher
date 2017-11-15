@@ -7,7 +7,7 @@ import java.io.Serializable
 object Tables : Serializable {
 
     private var tables: MutableList<Table> = mutableListOf(
-            Table("Table 1", mutableListOf(Dish("Dish 1", R.drawable.food_beer, null, 1.4f, "No Des"))),
+            Table("Table 1", mutableListOf(Dish("Dish 1", R.drawable.food_beer, null, 1.4f, "No Des", null))),
             Table("Table 2"),
             Table("Table 3"),
             Table("Table 4"),

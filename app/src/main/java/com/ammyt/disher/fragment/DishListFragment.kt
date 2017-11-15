@@ -114,7 +114,6 @@ class DishListFragment : Fragment() {
                 showTable(newTable, tableIndex)
 
                 return true
-
             }
             R.id.previous -> {
                 tableIndex = tableIndex - 1

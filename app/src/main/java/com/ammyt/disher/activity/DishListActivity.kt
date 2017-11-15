@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import android.view.View
 import com.ammyt.disher.R
 import com.ammyt.disher.fragment.DishListFragment
@@ -36,6 +37,8 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable 
         //toolbar.setLogo(R.drawable.icon_disher)
         setSupportActionBar(toolbar)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         // TODO revisar qué DishList mostrar al recrear la actividad tras girar el dispositivo
         if (fragmentManager.findFragmentById(R.id.dish_list_fragment) == null) {
             val table = intent.getSerializableExtra(TABLE_EXTRA) as? Table
@@ -46,6 +49,15 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable 
                     .add(R.id.dish_list_fragment, dishListFragment)
                     .commit()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun showDishAvailable(tableIndex: Int) {
@@ -70,7 +82,7 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable 
                             it.showTable(newTable, tableIndex)
 
                             Snackbar.make(
-                                    findViewById<View>(android.R.id.content),
+                                    dishListFragment.view,
                                     "New Dish added!",
                                     Snackbar.LENGTH_LONG)
                                     .show()

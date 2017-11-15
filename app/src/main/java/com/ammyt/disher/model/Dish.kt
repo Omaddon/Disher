@@ -9,5 +9,6 @@ data class Dish(
         var image: Int,
         var allergen: List<Allergen>?,
         var price: Float,
-        var description: String? = "No description available.") : Serializable {
+        var description: String? = "No description available.",
+        var options: String?) : Serializable {
 }

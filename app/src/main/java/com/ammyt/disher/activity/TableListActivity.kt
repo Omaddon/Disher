@@ -23,7 +23,7 @@ import org.json.JSONObject
 import java.net.URL
 import java.util.*
 
-// TODO floating button no flota por encima de la SnackBar
+
 class TableListActivity :
         AppCompatActivity(),
         TableListFragment.OnTableSelectedListener,
@@ -84,8 +84,23 @@ class TableListActivity :
 
             if (downloadedDishes != null) {
                 viewSwitcher.displayedChild = VIEW_INDEX.VIEW.index
-                Snackbar.make(findViewById<View>(android.R.id.content), "Dishes list downloaded!", Snackbar.LENGTH_LONG)
+
+                val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
+                val viewToSnackbar: View
+
+                if (dishListFragment != null) {
+                    viewToSnackbar = dishListFragment.view
+                }
+                else {
+                    viewToSnackbar = findViewById<View>(android.R.id.content)
+                }
+
+                Snackbar.make(
+                        viewToSnackbar,
+                        "Dishes list downloaded!",
+                        Snackbar.LENGTH_LONG)
                         .show()
+
             }
             else {
                 AlertDialog.Builder(this@TableListActivity)
@@ -139,7 +154,8 @@ class TableListActivity :
                         image,
                         allergenList,
                         price,
-                        description
+                        description,
+                        null
                 )
 
                 DishesAvailable.addDish(newDish)
@@ -189,7 +205,7 @@ class TableListActivity :
                             it.showTable(newTable, tableIndex)
 
                             Snackbar.make(
-                                    findViewById<View>(android.R.id.content),
+                                    dishListFragment.view,
                                     "New Dish added!",
                                     Snackbar.LENGTH_LONG)
                                     .show()
