@@ -27,10 +27,12 @@ import java.util.*
 class TableListActivity :
         AppCompatActivity(),
         TableListFragment.OnTableSelectedListener,
-        DishListFragment.OnAddDishToTable {
+        DishListFragment.OnAddDishToTable, DishListFragment.OnDeviceRotate{
 
-    private var tableSelectedIndex: Int = 0
     private lateinit var viewSwitcher: ViewSwitcher
+    private var tableSelected: Table? = null
+
+    var tableSelectedIndex: Int = 0
 
     enum class VIEW_INDEX(val index: Int) {
         LOADING(0),
@@ -62,10 +64,12 @@ class TableListActivity :
         }
 
         if (findViewById<View>(R.id.dish_list_fragment) != null) {
-            if (fragmentManager.findFragmentById(R.id.dish_list_fragment) == null) {
-                val dishListFragment = DishListFragment.newInstance(Tables.get(tableSelectedIndex), tableSelectedIndex)
+            val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
+
+            if (dishListFragment == null) {
+                val newDishListFragment = DishListFragment.newInstance(Tables.get(tableSelectedIndex), tableSelectedIndex)
                 fragmentManager.beginTransaction()
-                        .add(R.id.dish_list_fragment, dishListFragment)
+                        .add(R.id.dish_list_fragment, newDishListFragment)
                         .commit()
             }
         }
@@ -214,5 +218,16 @@ class TableListActivity :
                 }
             }
         }
+    }
+
+    override fun updateTableToShow() {
+        val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
+
+        dishListFragment?.showTable(tableSelected, tableSelectedIndex)
+    }
+
+    override fun recordMovingTable(newTable: Table, newTableIndex: Int) {
+        tableSelected = newTable
+        tableSelectedIndex = newTableIndex
     }
 }

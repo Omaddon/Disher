@@ -9,7 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
-
 import com.ammyt.disher.R
 import com.ammyt.disher.adapter.DishRecyclerViewAdapter
 import com.ammyt.disher.model.Dish
@@ -22,8 +21,11 @@ class DishListFragment : Fragment() {
     private lateinit var root: View
     private lateinit var dishRecyclerView: RecyclerView
     private var menu: Menu? = null
+
     private var tableIndex: Int = 0
+
     private var onAddDishToTable: OnAddDishToTable? = null
+    private var onDeviceRotate: OnDeviceRotate? = null
 
     companion object {
         private val TABLE_ARG = "TABLE_ARG"
@@ -41,7 +43,7 @@ class DishListFragment : Fragment() {
         }
     }
 
-    var table: Table? = null
+    private var table: Table? = null
         set(value) {
             field = value
 
@@ -50,7 +52,7 @@ class DishListFragment : Fragment() {
             }
         }
 
-    var dishes: MutableList<Dish>? = null
+    private var dishes: MutableList<Dish>? = null
         set(value) {
             field = value
 
@@ -70,6 +72,8 @@ class DishListFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         inflater?.let {
             root = it.inflate(R.layout.fragment_dish_list, container, false)
+
+
 
             dishRecyclerView = root.findViewById(R.id.dish_recycler_view)
             dishRecyclerView.layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.recycler_columns))
@@ -113,12 +117,16 @@ class DishListFragment : Fragment() {
                 val newTable = Tables.get(tableIndex)
                 showTable(newTable, tableIndex)
 
+                onDeviceRotate?.recordMovingTable(newTable, tableIndex)
+
                 return true
             }
             R.id.previous -> {
                 tableIndex = tableIndex - 1
                 val newTable = Tables.get(tableIndex)
                 showTable(newTable, tableIndex)
+
+                onDeviceRotate?.recordMovingTable(newTable, tableIndex)
 
                 return true
             }
@@ -143,6 +151,10 @@ class DishListFragment : Fragment() {
         if (context is OnAddDishToTable) {
             onAddDishToTable = context
         }
+
+        if (context is OnDeviceRotate) {
+            onDeviceRotate = context
+        }
     }
 
     override fun onDetach() {
@@ -151,16 +163,24 @@ class DishListFragment : Fragment() {
         onAddDishToTable = null
     }
 
-    fun showTable(newTable: Table, newTableIndex: Int) {
-        table = newTable
-        tableIndex = newTableIndex
+    override fun onResume() {
+        super.onResume()
 
-        val adapter = DishRecyclerViewAdapter(newTable.dishes)
-        dishRecyclerView.adapter = adapter
+        onDeviceRotate?.updateTableToShow()
+    }
+
+    fun showTable(newTable: Table?, newTableIndex: Int) {
+        newTable?.let {
+            table = newTable
+            tableIndex = newTableIndex
+
+            val adapter = DishRecyclerViewAdapter(newTable.dishes)
+            dishRecyclerView.adapter = adapter
 
 
-        updateToolbarDishName()
-        onPrepareShowMenu(menu)
+            updateToolbarDishName()
+            onPrepareShowMenu(menu)
+        }
     }
 
     private fun updateToolbarDishName() {
@@ -173,4 +193,10 @@ class DishListFragment : Fragment() {
     interface OnAddDishToTable {
         fun showDishAvailable(tableIndex: Int)
     }
+
+    interface OnDeviceRotate {
+        fun updateTableToShow()
+        fun recordMovingTable(newTable: Table, newTableIndex: Int)
+    }
+
 }

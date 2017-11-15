@@ -8,17 +8,19 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import android.view.View
 import com.ammyt.disher.R
 import com.ammyt.disher.fragment.DishListFragment
 import com.ammyt.disher.model.Table
 
-class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable {
+class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable, DishListFragment.OnDeviceRotate {
 
     companion object {
         private val TABLE_EXTRA = "TABLE_EXTRA"
         private val TABLEINDEX_EXTRA = "TABLEINDEX_EXTRA"
         val REQUEST_DISH_AVAILABLE = 1
+
+        private var table: Table? = null
+        var tableIndex: Int = 0
 
         fun intent(context: Context, table: Table?, tableIndex: Int): Intent {
             val intent = Intent(context, DishListActivity::class.java)
@@ -39,14 +41,19 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable 
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // TODO revisar qué DishList mostrar al recrear la actividad tras girar el dispositivo
-        if (fragmentManager.findFragmentById(R.id.dish_list_fragment) == null) {
-            val table = intent.getSerializableExtra(TABLE_EXTRA) as? Table
-            val tableIndex = intent.getIntExtra(TABLEINDEX_EXTRA, 0)
+        val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
 
-            val dishListFragment = DishListFragment.newInstance(table, tableIndex)
+        // TODO revisar qué DishList mostrar al recrear la actividad tras girar el dispositivo
+        if (dishListFragment == null) {
+            val newTable = intent.getSerializableExtra(TABLE_EXTRA) as? Table
+            val newTableIndex = intent.getIntExtra(TABLEINDEX_EXTRA, 0)
+
+            newTable?.let { table = newTable }
+            tableIndex = newTableIndex
+
+            val newDishListFragment = DishListFragment.newInstance(newTable, newTableIndex)
             fragmentManager.beginTransaction()
-                    .add(R.id.dish_list_fragment, dishListFragment)
+                    .add(R.id.dish_list_fragment, newDishListFragment)
                     .commit()
         }
     }
@@ -91,5 +98,16 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable 
                 }
             }
         }
+    }
+
+    override fun updateTableToShow() {
+        val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
+
+        dishListFragment?.showTable(table, tableIndex)
+    }
+
+    override fun recordMovingTable(newTable: Table, newTableIndex: Int) {
+        table = newTable
+        tableIndex = newTableIndex
     }
 }
