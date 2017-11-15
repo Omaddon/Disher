@@ -17,7 +17,7 @@ class DishRecyclerViewAdapter(val dishList: List<Dish>?) :
 
     override fun onBindViewHolder(holder: DishListViewHolder?, position: Int) {
         dishList?.let {
-            holder?.bindDish(dishList.get(position), position)
+            holder?.bindDish(dishList.get(position))
         }
     }
 
@@ -37,12 +37,12 @@ class DishRecyclerViewAdapter(val dishList: List<Dish>?) :
 
         val dishImage = itemView.findViewById<ImageView>(R.id.dish_image)
         val dishName = itemView.findViewById<TextView>(R.id.dish_name)
+        val dishPrice = itemView.findViewById<TextView>(R.id.dish_price)
 
-        fun bindDish(dish: Dish, position: Int) {
-            val context = itemView.context
-
+        fun bindDish(dish: Dish) {
             dishImage.setImageResource(dish.image)
             dishName.text = dish.name
+            dishPrice.text = itemView.context.getString(R.string.dish_price, dish.price)
         }
     }
 }

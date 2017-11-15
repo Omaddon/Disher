@@ -25,7 +25,7 @@ import org.json.JSONObject
 import java.net.URL
 import java.util.*
 
-
+// TODO cuenta de la mesa!!
 class TableListActivity :
         AppCompatActivity(),
         TableListFragment.OnTableSelectedListener,

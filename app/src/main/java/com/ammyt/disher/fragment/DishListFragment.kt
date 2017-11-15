@@ -73,8 +73,6 @@ class DishListFragment : Fragment() {
         inflater?.let {
             root = it.inflate(R.layout.fragment_dish_list, container, false)
 
-
-
             dishRecyclerView = root.findViewById(R.id.dish_recycler_view)
             dishRecyclerView.layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.recycler_columns))
             dishRecyclerView.itemAnimator = DefaultItemAnimator()

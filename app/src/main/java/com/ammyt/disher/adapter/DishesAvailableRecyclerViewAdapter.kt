@@ -20,7 +20,7 @@ class DishesAvailableRecyclerViewAdapter :
     var onClickListener: View.OnClickListener? = null
 
     override fun onBindViewHolder(holder: DishesAvailableViewHolder?, position: Int) {
-        holder?.bindDishAvailable(position)
+        holder?.bindDishAvailable(DishesAvailable.getDish(position))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): DishesAvailableViewHolder {
@@ -44,9 +44,7 @@ class DishesAvailableRecyclerViewAdapter :
         private val allergenImageList = mutableListOf<ImageView>()
 
 
-        fun bindDishAvailable(position: Int) {
-
-            val dish: Dish = DishesAvailable.getDish(position)
+        fun bindDishAvailable(dish: Dish) {
 
             dishName.text = dish.name
             dishImage.setImageResource(dish.image)

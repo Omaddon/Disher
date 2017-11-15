@@ -11,6 +11,7 @@ import android.view.MenuItem
 import com.ammyt.disher.R
 import com.ammyt.disher.fragment.DishListFragment
 import com.ammyt.disher.model.Table
+import com.ammyt.disher.model.Tables
 
 class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable, DishListFragment.OnDeviceRotate {
 
@@ -80,12 +81,15 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable,
 
                 val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
                 val newTable = data?.getSerializableExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH) as? Table
-                val tableIndex = data?.getIntExtra(AddDishDetailActivity.TABLE_INDEX_TO_SEND, 0)
+                val newTableIndex = data?.getIntExtra(AddDishDetailActivity.TABLE_INDEX_TO_SEND, 0)
 
                 dishListFragment?.let {
                     if (newTable != null) {
-                        if (tableIndex != null) {
-                            it.showTable(newTable, tableIndex)
+                        if (newTableIndex != null) {
+                            tableIndex = newTableIndex
+                            table = Tables.get(tableIndex)
+
+                            it.showTable(newTable, newTableIndex)
 
                             Snackbar.make(
                                     dishListFragment.view,
