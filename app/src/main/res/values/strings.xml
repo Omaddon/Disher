@@ -7,4 +7,9 @@
     <string name="allergen_image">Allergen image</string>
     <string name="dish_price">%.2f €</string>
     <string name="dish_options_hint">Type the options for this Dish.</string>
+    <string name="bill">Bill</string>
+    <string name="pay_bill">Pay bill</string>
+    <string name="back_from_bill">Back</string>
+    <string name="dishes_amount">%d dishes</string>
+    <string name="bill_format">%.2f €</string>
 </resources>

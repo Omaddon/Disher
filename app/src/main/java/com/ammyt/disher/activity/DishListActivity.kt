@@ -13,12 +13,16 @@ import com.ammyt.disher.fragment.DishListFragment
 import com.ammyt.disher.model.Table
 import com.ammyt.disher.model.Tables
 
-class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable, DishListFragment.OnDeviceRotate {
+class DishListActivity : AppCompatActivity(),
+        DishListFragment.OnAddDishToTable,
+        DishListFragment.OnDeviceRotate,
+        DishListFragment.OnShowBill {
 
     companion object {
         private val TABLE_EXTRA = "TABLE_EXTRA"
         private val TABLEINDEX_EXTRA = "TABLEINDEX_EXTRA"
         val REQUEST_DISH_AVAILABLE = 1
+        val REQUEST_BILL = 2
 
         private var table: Table? = null
         var tableIndex: Int = 0
@@ -76,10 +80,11 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable,
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
+
         if (requestCode == REQUEST_DISH_AVAILABLE) {
             if (resultCode == Activity.RESULT_OK) {
 
-                val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
                 val newTable = data?.getSerializableExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH) as? Table
                 val newTableIndex = data?.getIntExtra(AddDishDetailActivity.TABLE_INDEX_TO_SEND, 0)
 
@@ -101,6 +106,26 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable,
                 }
             }
         }
+        else if (requestCode == REQUEST_BILL) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                val newTable = data?.getSerializableExtra(TableBillActivity.NEW_TABLE_DELETED) as? Table
+
+                dishListFragment?.let {
+                    if (newTable != null) {
+                        Tables.get(tableIndex).replaceDishes(newTable.dishes)
+
+                        it.showTable(newTable, tableIndex)
+
+                        Snackbar.make(
+                                dishListFragment.view,
+                                "Dishes deleted!",
+                                Snackbar.LENGTH_LONG)
+                                .show()
+                    }
+                }
+            }
+        }
     }
 
     override fun updateTableToShow() {
@@ -112,5 +137,11 @@ class DishListActivity : AppCompatActivity(), DishListFragment.OnAddDishToTable,
     override fun recordMovingTable(newTable: Table, newTableIndex: Int) {
         table = newTable
         tableIndex = newTableIndex
+    }
+
+    override fun showBill(table: Table?) {
+        table?.let {
+            startActivityForResult(TableBillActivity.newIntent(this, table), REQUEST_BILL)
+        }
     }
 }

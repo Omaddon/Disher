@@ -22,4 +22,8 @@ data class Table(
             dishes = mutableListOf(dish)
         }
     }
+
+    fun replaceDishes(newDishes: MutableList<Dish>?) {
+        dishes = newDishes
+    }
 }

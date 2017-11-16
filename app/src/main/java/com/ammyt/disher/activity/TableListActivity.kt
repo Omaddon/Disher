@@ -25,15 +25,20 @@ import org.json.JSONObject
 import java.net.URL
 import java.util.*
 
-// TODO cuenta de la mesa!!
+// TODO cambiar companion por onSavedInstanceState
 class TableListActivity :
         AppCompatActivity(),
         TableListFragment.OnTableSelectedListener,
-        DishListFragment.OnAddDishToTable, DishListFragment.OnDeviceRotate{
+        DishListFragment.OnAddDishToTable,
+        DishListFragment.OnDeviceRotate,
+        DishListFragment.OnShowBill {
 
     private lateinit var viewSwitcher: ViewSwitcher
 
     companion object {
+        val REQUEST_DISH_AVAILABLE = 1
+        val REQUEST_BILL = 2
+
         private var tableSelected: Table? = null
         private var tableSelectedIndex: Int = 0
     }
@@ -199,16 +204,17 @@ class TableListActivity :
     override fun showDishAvailable(tableIndex: Int) {
         val intent = DishesAvailableActivity.intent(this, tableIndex)
 
-        startActivityForResult(intent, DishListActivity.REQUEST_DISH_AVAILABLE)
+        startActivityForResult(intent, REQUEST_DISH_AVAILABLE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == DishListActivity.REQUEST_DISH_AVAILABLE) {
+        val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
+
+        if (requestCode == REQUEST_DISH_AVAILABLE) {
             if (resultCode == Activity.RESULT_OK) {
 
-                val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
                 val newTable = data?.getSerializableExtra(AddDishDetailActivity.TABLE_TO_ADD_DISH) as? Table
                 val tableIndex = data?.getIntExtra(AddDishDetailActivity.TABLE_INDEX_TO_SEND, 0)
 
@@ -230,6 +236,26 @@ class TableListActivity :
                 }
             }
         }
+        else if (requestCode == REQUEST_BILL) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                val newTable = data?.getSerializableExtra(TableBillActivity.NEW_TABLE_DELETED) as? Table
+
+                dishListFragment?.let {
+                    if (newTable != null) {
+                        Tables.get(tableSelectedIndex).replaceDishes(newTable.dishes)
+
+                        it.showTable(newTable, tableSelectedIndex)
+
+                        Snackbar.make(
+                                dishListFragment.view,
+                                "Dishes deleted!",
+                                Snackbar.LENGTH_LONG)
+                                .show()
+                    }
+                }
+            }
+        }
     }
 
     override fun updateTableToShow() {
@@ -241,5 +267,11 @@ class TableListActivity :
     override fun recordMovingTable(newTable: Table, newTableIndex: Int) {
         tableSelected = newTable
         tableSelectedIndex = newTableIndex
+    }
+
+    override fun showBill(table: Table?) {
+        table?.let {
+            startActivityForResult(TableBillActivity.newIntent(this, table), REQUEST_BILL)
+        }
     }
 }

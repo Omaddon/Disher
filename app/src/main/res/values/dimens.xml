@@ -10,4 +10,6 @@
     <dimen name="dish_detail_name_size">20sp</dimen>
     <dimen name="dish_detail_price_size">18sp</dimen>
     <dimen name="dish_detail_description_size">16sp</dimen>
+    <dimen name="bill_table_name_size">24sp</dimen>
+    <dimen name="bill_amount_size">50sp</dimen>
 </resources>

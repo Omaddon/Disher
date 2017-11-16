@@ -26,6 +26,7 @@ class DishListFragment : Fragment() {
 
     private var onAddDishToTable: OnAddDishToTable? = null
     private var onDeviceRotate: OnDeviceRotate? = null
+    private var onShowBill: OnShowBill? = null
 
     companion object {
         private val TABLE_ARG = "TABLE_ARG"
@@ -86,7 +87,7 @@ class DishListFragment : Fragment() {
             dishRecyclerView.adapter = adapter
 
             adapter.onClickListener = View.OnClickListener { v: View? ->
-                // TODO navegar al detalle del plato para borrar o no hacer nada (opcional)
+                // TODO navegar al detalle del plato para borrarlo y mostrar sus datos (mostrar opciones!)
             }
 
             root.findViewById<FloatingActionButton>(R.id.show_dishes_available)?.setOnClickListener { v: View? ->
@@ -128,6 +129,11 @@ class DishListFragment : Fragment() {
 
                 return true
             }
+            R.id.bill -> {
+                onShowBill?.showBill(table)
+
+                return true
+            }
         }
 
         return super.onOptionsItemSelected(item)
@@ -153,12 +159,18 @@ class DishListFragment : Fragment() {
         if (context is OnDeviceRotate) {
             onDeviceRotate = context
         }
+
+        if (context is OnShowBill) {
+            onShowBill = context
+        }
     }
 
     override fun onDetach() {
         super.onDetach()
 
         onAddDishToTable = null
+        onDeviceRotate = null
+        onShowBill = null
     }
 
     override fun onResume() {
@@ -195,6 +207,10 @@ class DishListFragment : Fragment() {
     interface OnDeviceRotate {
         fun updateTableToShow()
         fun recordMovingTable(newTable: Table, newTableIndex: Int)
+    }
+
+    interface OnShowBill {
+        fun showBill(table: Table?)
     }
 
 }
