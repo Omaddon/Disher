@@ -75,12 +75,6 @@ class DishListActivity : AppCompatActivity(),
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showDishAvailable(tableIndex: Int) {
-        val intent = DishesAvailableActivity.intent(this, tableIndex)
-
-        startActivityForResult(intent, REQUEST_DISH_AVAILABLE)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -151,15 +145,10 @@ class DishListActivity : AppCompatActivity(),
     // INTERFACES
     // -----------
 
-    override fun updateTableToShow() {
-        val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
+    override fun showDishAvailable(tableIndex: Int) {
+        val intent = DishesAvailableActivity.intent(this, tableIndex)
 
-        dishListFragment?.showTable(table, tableIndex)
-    }
-
-    override fun recordMovingTable(newTable: Table, newTableIndex: Int) {
-        table = newTable
-        tableIndex = newTableIndex
+        startActivityForResult(intent, REQUEST_DISH_AVAILABLE)
     }
 
     override fun showBill(table: Table?) {
@@ -170,5 +159,16 @@ class DishListActivity : AppCompatActivity(),
 
     override fun showDishDetail(dish: Dish?) {
         startActivityForResult(DishDetailActivity.newIntent(this, dish, table), REQUEST_DISH_DETAIL)
+    }
+
+    override fun updateTableToShow() {
+        val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
+
+        dishListFragment?.showTable(table, tableIndex)
+    }
+
+    override fun recordMovingTable(newTable: Table, newTableIndex: Int) {
+        table = newTable
+        tableIndex = newTableIndex
     }
 }

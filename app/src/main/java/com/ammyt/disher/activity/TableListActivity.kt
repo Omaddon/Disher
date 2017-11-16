@@ -186,22 +186,6 @@ class TableListActivity :
         return null
     }
 
-    override fun onTableSelected(table: Table?, position: Int) {
-        val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
-
-        if (dishListFragment == null) {
-            startActivity(DishListActivity.intent(this, table, position))
-        }
-        else {
-            table?.let {
-                tableSelectedIndex = position
-                tableSelected = Tables.get(tableSelectedIndex)
-                dishListFragment.showTable(it, position)
-            }
-
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -272,10 +256,36 @@ class TableListActivity :
     // INTERFACES
     // -----------
 
+    override fun onTableSelected(table: Table?, position: Int) {
+        val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
+
+        if (dishListFragment == null) {
+            startActivity(DishListActivity.intent(this, table, position))
+        }
+        else {
+            table?.let {
+                tableSelectedIndex = position
+                tableSelected = Tables.get(tableSelectedIndex)
+                dishListFragment.showTable(it, position)
+            }
+
+        }
+    }
+
     override fun showDishAvailable(tableIndex: Int) {
         val intent = DishesAvailableActivity.intent(this, tableIndex)
 
         startActivityForResult(intent, REQUEST_DISH_AVAILABLE)
+    }
+
+    override fun showBill(table: Table?) {
+        table?.let {
+            startActivityForResult(TableBillActivity.newIntent(this, table), REQUEST_BILL)
+        }
+    }
+
+    override fun showDishDetail(dish: Dish?) {
+        startActivityForResult(DishDetailActivity.newIntent(this, dish, tableSelected), REQUEST_DISH_DETAIL)
     }
 
     override fun updateTableToShow() {
@@ -289,14 +299,6 @@ class TableListActivity :
         tableSelectedIndex = newTableIndex
     }
 
-    override fun showBill(table: Table?) {
-        table?.let {
-            startActivityForResult(TableBillActivity.newIntent(this, table), REQUEST_BILL)
-        }
-    }
 
-    override fun showDishDetail(dish: Dish?) {
-        startActivityForResult(DishDetailActivity.newIntent(this, dish, tableSelected), REQUEST_DISH_DETAIL)
-    }
 
 }
