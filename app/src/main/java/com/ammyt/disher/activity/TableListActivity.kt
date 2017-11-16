@@ -238,10 +238,10 @@ class TableListActivity :
 
         dishListFragment?.let {
             if (newTable != null) {
-                Tables.get(DishListActivity.tableIndex).replaceDishes(newTable.dishes)
+                Tables.get(tableSelectedIndex).replaceDishes(newTable.dishes)
                 tableSelected = newTable
 
-                it.showTable(newTable, DishListActivity.tableIndex)
+                it.showTable(newTable, tableSelectedIndex)
 
                 Snackbar.make(
                         dishListFragment.view,
