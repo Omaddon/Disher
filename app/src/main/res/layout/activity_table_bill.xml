@@ -53,6 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin_small"
+        android:backgroundTint="@color/red_alert_button"
+        android:textColor="#ffffff"
         android:text="@string/pay_bill"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

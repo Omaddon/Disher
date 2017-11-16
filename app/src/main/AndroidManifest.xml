@@ -28,6 +28,8 @@
         </activity>
         <activity android:name=".activity.TableBillActivity">
         </activity>
+        <activity android:name=".activity.DishDetailActivity">
+        </activity>
     </application>
 
 </manifest>

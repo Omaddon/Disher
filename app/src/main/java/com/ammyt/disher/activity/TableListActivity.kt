@@ -25,19 +25,20 @@ import org.json.JSONObject
 import java.net.URL
 import java.util.*
 
-// TODO cambiar companion por onSavedInstanceState
 class TableListActivity :
         AppCompatActivity(),
         TableListFragment.OnTableSelectedListener,
         DishListFragment.OnAddDishToTable,
         DishListFragment.OnDeviceRotate,
-        DishListFragment.OnShowBill {
+        DishListFragment.OnShowBill,
+        DishListFragment.OnShowDishDetail {
 
     private lateinit var viewSwitcher: ViewSwitcher
 
     companion object {
         val REQUEST_DISH_AVAILABLE = 1
         val REQUEST_BILL = 2
+        val REQUEST_DISH_DETAIL = 3
 
         private var tableSelected: Table? = null
         private var tableSelectedIndex: Int = 0
@@ -157,7 +158,7 @@ class TableListActivity :
                 val jsonAllergen = jsonDish.getJSONArray("allergen")
                 val allergenList: MutableList<Allergen.AllergenList> = mutableListOf()
 
-                for (allergenIndex in 0..jsonAllergen.length() - 1) {
+                for (allergenIndex in 0 until jsonAllergen.length()) {
                     val allergen = toAllergen(jsonAllergen.getInt(allergenIndex))
                     allergen?.let { allergenList.add(it) }
                 }
@@ -201,12 +202,6 @@ class TableListActivity :
         }
     }
 
-    override fun showDishAvailable(tableIndex: Int) {
-        val intent = DishesAvailableActivity.intent(this, tableIndex)
-
-        startActivityForResult(intent, REQUEST_DISH_AVAILABLE)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -241,21 +236,46 @@ class TableListActivity :
 
                 val newTable = data?.getSerializableExtra(TableBillActivity.NEW_TABLE_DELETED) as? Table
 
-                dishListFragment?.let {
-                    if (newTable != null) {
-                        Tables.get(tableSelectedIndex).replaceDishes(newTable.dishes)
-
-                        it.showTable(newTable, tableSelectedIndex)
-
-                        Snackbar.make(
-                                dishListFragment.view,
-                                "Dishes deleted!",
-                                Snackbar.LENGTH_LONG)
-                                .show()
-                    }
-                }
+                updateDishListActivityTable(newTable, "Dishes deleted!")
             }
         }
+        else if (requestCode == REQUEST_DISH_DETAIL) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                val newTable = data?.getSerializableExtra(DishDetailActivity.TABLE_FOR_DETAIL) as? Table
+
+                updateDishListActivityTable(newTable, "Dish deleted!")
+            }
+        }
+    }
+
+    private fun updateDishListActivityTable(newTable: Table?, textForSnackbar: String) {
+        val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
+
+        dishListFragment?.let {
+            if (newTable != null) {
+                Tables.get(DishListActivity.tableIndex).replaceDishes(newTable.dishes)
+                tableSelected = newTable
+
+                it.showTable(newTable, DishListActivity.tableIndex)
+
+                Snackbar.make(
+                        dishListFragment.view,
+                        textForSnackbar,
+                        Snackbar.LENGTH_LONG)
+                        .show()
+            }
+        }
+    }
+
+    // -----------
+    // INTERFACES
+    // -----------
+
+    override fun showDishAvailable(tableIndex: Int) {
+        val intent = DishesAvailableActivity.intent(this, tableIndex)
+
+        startActivityForResult(intent, REQUEST_DISH_AVAILABLE)
     }
 
     override fun updateTableToShow() {
@@ -274,4 +294,9 @@ class TableListActivity :
             startActivityForResult(TableBillActivity.newIntent(this, table), REQUEST_BILL)
         }
     }
+
+    override fun showDishDetail(dish: Dish?) {
+        startActivityForResult(DishDetailActivity.newIntent(this, dish, tableSelected), REQUEST_DISH_DETAIL)
+    }
+
 }

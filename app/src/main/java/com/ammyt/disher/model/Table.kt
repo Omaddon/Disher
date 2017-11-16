@@ -23,6 +23,10 @@ data class Table(
         }
     }
 
+    fun deleteDish(dish: Dish) {
+        dishes?.remove(dish)
+    }
+
     fun replaceDishes(newDishes: MutableList<Dish>?) {
         dishes = newDishes
     }

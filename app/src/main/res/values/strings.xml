@@ -12,4 +12,6 @@
     <string name="back_from_bill">Back</string>
     <string name="dishes_amount">%d dishes</string>
     <string name="bill_format">%.2f €</string>
+    <string name="dish_detail_options_label">Notes:</string>
+    <string name="delete_dish">Delete dish</string>
 </resources>

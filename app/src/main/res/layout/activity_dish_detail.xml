@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ammyt.disher.activity.AddDishDetailActivity">
+    tools:context="com.ammyt.disher.activity.DishDetailActivity">
 
     <TextView
         android:id="@+id/dish_name"
@@ -236,45 +236,57 @@
         app:layout_constraintTop_toBottomOf="@+id/dish_image"
         tools:text="Dish description with a very very very very long description for this awesome dish."/>
 
-    <EditText
+    <TextView
+        android:id="@+id/options_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic|bold"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_default"
+        android:text="@string/dish_detail_options_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dish_description"
+        android:layout_marginLeft="@dimen/margin_small"/>
+
+    <TextView
         android:id="@+id/dish_options"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:textStyle="italic"
         android:layout_marginBottom="@dimen/margin_default"
         android:layout_marginEnd="@dimen/margin_small"
         android:layout_marginStart="@dimen/margin_small"
-        android:layout_marginTop="@dimen/margin_default"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="@string/dish_options_hint"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/cancel_dish_button"
+        android:layout_marginTop="@dimen/margin_small"
+        app:layout_constraintBottom_toTopOf="@+id/delete_dish_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dish_description"/>
+        app:layout_constraintTop_toBottomOf="@+id/options_label"
+        tools:text="Dish options, maybe a dish with more potatoes or without salad. Or cold drikn!!"/>
 
     <Button
-        android:id="@+id/add_dish_button"
+        android:id="@+id/ok_dish_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin_small"
-        android:text="@string/add_dish"
+        android:text="@android:string/ok"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cancel_dish_button"
+        app:layout_constraintStart_toEndOf="@+id/delete_dish_button"
         android:layout_marginRight="@dimen/margin_small"/>
 
     <Button
-        android:id="@+id/cancel_dish_button"
+        android:id="@+id/delete_dish_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
         android:layout_marginStart="@dimen/margin_small"
-        android:text="@android:string/cancel"
+        android:text="@string/delete_dish"
+        android:backgroundTint="@color/red_alert_button"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/add_dish_button"
+        app:layout_constraintEnd_toStartOf="@+id/ok_dish_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginLeft="@dimen/margin_small"/>

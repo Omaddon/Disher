@@ -10,19 +10,23 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import com.ammyt.disher.R
 import com.ammyt.disher.fragment.DishListFragment
+import com.ammyt.disher.model.Dish
 import com.ammyt.disher.model.Table
 import com.ammyt.disher.model.Tables
 
 class DishListActivity : AppCompatActivity(),
         DishListFragment.OnAddDishToTable,
         DishListFragment.OnDeviceRotate,
-        DishListFragment.OnShowBill {
+        DishListFragment.OnShowBill,
+        DishListFragment.OnShowDishDetail {
 
     companion object {
         private val TABLE_EXTRA = "TABLE_EXTRA"
         private val TABLEINDEX_EXTRA = "TABLEINDEX_EXTRA"
+
         val REQUEST_DISH_AVAILABLE = 1
         val REQUEST_BILL = 2
+        val REQUEST_DISH_DETAIL = 3
 
         private var table: Table? = null
         var tableIndex: Int = 0
@@ -111,22 +115,41 @@ class DishListActivity : AppCompatActivity(),
 
                 val newTable = data?.getSerializableExtra(TableBillActivity.NEW_TABLE_DELETED) as? Table
 
-                dishListFragment?.let {
-                    if (newTable != null) {
-                        Tables.get(tableIndex).replaceDishes(newTable.dishes)
+                updateDishListActivityTable(newTable, "Dishes deleted!")
+            }
+        }
+        else if (requestCode == REQUEST_DISH_DETAIL) {
+            if (resultCode == Activity.RESULT_OK) {
 
-                        it.showTable(newTable, tableIndex)
+                val newTable = data?.getSerializableExtra(DishDetailActivity.TABLE_FOR_DETAIL) as? Table
 
-                        Snackbar.make(
-                                dishListFragment.view,
-                                "Dishes deleted!",
-                                Snackbar.LENGTH_LONG)
-                                .show()
-                    }
-                }
+                updateDishListActivityTable(newTable, "Dish deleted!")
             }
         }
     }
+
+    private fun updateDishListActivityTable(newTable: Table?, textForSnackbar: String) {
+        val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
+
+        dishListFragment?.let {
+            if (newTable != null) {
+                Tables.get(tableIndex).replaceDishes(newTable.dishes)
+                table = newTable
+
+                it.showTable(newTable, tableIndex)
+
+                Snackbar.make(
+                        dishListFragment.view,
+                        textForSnackbar,
+                        Snackbar.LENGTH_LONG)
+                        .show()
+            }
+        }
+    }
+
+    // -----------
+    // INTERFACES
+    // -----------
 
     override fun updateTableToShow() {
         val dishListFragment = fragmentManager.findFragmentById(R.id.dish_list_fragment) as? DishListFragment
@@ -143,5 +166,9 @@ class DishListActivity : AppCompatActivity(),
         table?.let {
             startActivityForResult(TableBillActivity.newIntent(this, table), REQUEST_BILL)
         }
+    }
+
+    override fun showDishDetail(dish: Dish?) {
+        startActivityForResult(DishDetailActivity.newIntent(this, dish, table), REQUEST_DISH_DETAIL)
     }
 }

@@ -27,6 +27,7 @@ class DishListFragment : Fragment() {
     private var onAddDishToTable: OnAddDishToTable? = null
     private var onDeviceRotate: OnDeviceRotate? = null
     private var onShowBill: OnShowBill? = null
+    private var onShowDishDetail: OnShowDishDetail? = null
 
     companion object {
         private val TABLE_ARG = "TABLE_ARG"
@@ -86,9 +87,7 @@ class DishListFragment : Fragment() {
             val adapter = DishRecyclerViewAdapter(dishes)
             dishRecyclerView.adapter = adapter
 
-            adapter.onClickListener = View.OnClickListener { v: View? ->
-                // TODO navegar al detalle del plato para borrarlo y mostrar sus datos (mostrar opciones!)
-            }
+            setListenerToAdapter(adapter)
 
             root.findViewById<FloatingActionButton>(R.id.show_dishes_available)?.setOnClickListener { v: View? ->
                 onAddDishToTable?.showDishAvailable(tableIndex)
@@ -163,6 +162,10 @@ class DishListFragment : Fragment() {
         if (context is OnShowBill) {
             onShowBill = context
         }
+
+        if (context is OnShowDishDetail) {
+            onShowDishDetail = context
+        }
     }
 
     override fun onDetach() {
@@ -171,6 +174,7 @@ class DishListFragment : Fragment() {
         onAddDishToTable = null
         onDeviceRotate = null
         onShowBill = null
+        onShowDishDetail = null
     }
 
     override fun onResume() {
@@ -187,9 +191,19 @@ class DishListFragment : Fragment() {
             val adapter = DishRecyclerViewAdapter(newTable.dishes)
             dishRecyclerView.adapter = adapter
 
+            setListenerToAdapter(adapter)
 
             updateToolbarDishName()
             onPrepareShowMenu(menu)
+        }
+    }
+
+    private fun setListenerToAdapter(adapter: DishRecyclerViewAdapter) {
+        adapter.onClickListener = View.OnClickListener { v: View? ->
+            val position = dishRecyclerView.getChildAdapterPosition(v)
+            val dish = dishes?.get(position)
+
+            onShowDishDetail?.showDishDetail(dish)
         }
     }
 
@@ -213,4 +227,7 @@ class DishListFragment : Fragment() {
         fun showBill(table: Table?)
     }
 
+    interface OnShowDishDetail {
+        fun showDishDetail(dish: Dish?)
+    }
 }
