@@ -32,7 +32,7 @@ An application for android in kotlin to handle the orders of the tables of a res
 ## View expamples from app
 Dish List | Dishes Available | Dish Detail | Table Bill | Landscape
 ------------ | ------------ | ------------ | ------------ | ------------
-<img src="https://github.com/Omaddon/Disher/blob/master/snapshots/dish_list.png" width="150px"> | <img src="https://github.com/Omaddon/Disher/blob/master/snapshots/dishes_available.png" width="150px"> | <img src="https://github.com/Omaddon/Disher/blob/master/snapshots/dish_detail.png" width="150px"> | <img src="https://github.com/Omaddon/Disher/blob/master/snapshots/table_bill.png" width="150px"> | <img src="https://github.com/Omaddon/Disher/blob/master/snapshots/landscape.png" width="150px">
+<img src="https://github.com/Omaddon/Disher/blob/master/snapshots/dish_list.png" width="150px"> | <img src="https://github.com/Omaddon/Disher/blob/master/snapshots/dishes_available.png" width="150px"> | <img src="https://github.com/Omaddon/Disher/blob/master/snapshots/dish_detail.png" width="150px"> | <img src="https://github.com/Omaddon/Disher/blob/master/snapshots/table_bill.png" width="150px"> | <img src="https://github.com/Omaddon/Disher/blob/master/snapshots/landscape.png" width="250px">
 
 ## Navigation
 
