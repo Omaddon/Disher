@@ -38,7 +38,7 @@ Dish List | Dishes Available | Dish Detail | Table Bill | Landscape
 
 You can view very simple example of navigation in Marvel [here](https://marvelapp.com/2dj4570).
 
-- When app starts, the dish available list will be downloaded from a mock api: [MockResponse](http://www.mocky.io/v2/5a0b2455320000ed01e96398)
+- When app starts, the dish available list will be downloaded from a mock api: [MockResponse](http://www.mocky.io/v2/5a0b2455320000ed01e96398).
 - Depending on the screen size of the device and its orientation, a screen or other initial screen will be displayed.
 
 #### 400dp - landscape
